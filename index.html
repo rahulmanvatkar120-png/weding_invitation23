@@ -24,334 +24,92 @@
 
         body {
             font-family: 'Cormorant Garamond', serif;
-            background: linear-gradient(135deg, var(--cream) 0%, #FFF9E6 50%, var(--cream) 100%);
+            background: url('background.JPG') no-repeat center center;
+            background-size: cover;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Cartoon Temple Background */
-        .temple-hero {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.5;
-        }
-
-        .cartoon-temple {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .temple-dome {
-            width: 180px;
-            height: 120px;
-            background: var(--Burgundy);
-            border-radius: 90px 90px 0 0;
-            position: relative;
-            border: 4px solid #5a1f28;
-            box-shadow: inset -15px 0 30px rgba(0,0,0,0.2);
-        }
-
-        .temple-dome::before {
-            content: '';
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 45px;
-            background: var(--gold);
-            border-radius: 50% 50% 50% 0;
-            transform: translateX(-50%) rotate(45deg);
-            border: 3px solid var(--gold-dark);
-        }
-
-        .temple-dome::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 75px;
-            background: var(--gold-light);
-            border: 3px solid var(--gold);
-            border-radius: 8px 8px 0 0;
-        }
-
-        .temple-building {
-            width: 300px;
-            height: 180px;
-            background: linear-gradient(180deg, var(--gold-light) 0%, #e8d4b0 100%);
-            border: 4px solid var(--gold);
-            border-radius: 5px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .pillars {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 0;
-        }
-
-        .pillar {
-            width: 30px;
-            height: 150px;
-            background: linear-gradient(90deg, #DEB887 0%, var(--gold-light) 50%, #DEB887 100%);
-            border: 2px solid var(--gold);
-            border-radius: 4px;
-        }
-
-        .entrance {
-            position: absolute;
-            bottom: 0;
-            width: 70px;
-            height: 90px;
-            background: #4A3728;
-            border: 3px solid var(--gold-dark);
-            border-bottom: none;
-            border-radius: 35px 35px 0 0;
-        }
-
-        .temple-base {
-            width: 360px;
-            height: 35px;
-            background: var(--gold-dark);
-            border-radius: 5px;
-        }
-
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 50px;
-            opacity: 0.6;
-            animation: cloudMove 25s linear infinite;
-        }
-
-        .cloud-1 {
-            width: 120px;
-            height: 45px;
-            top: 8%;
-            left: -120px;
-        }
-
-        .cloud-2 {
-            width: 90px;
-            height: 35px;
-            top: 15%;
-            left: -90px;
-            animation-delay: -8s;
-        }
-
-        @keyframes cloudMove {
-            from { transform: translateX(0); }
-            to { transform: translateX(calc(100vw + 200px)); }
-        }
-
         /* Main Container */
         .container {
-            position: relative;
-            z-index: 10;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        /* Invitation Card - Transparent */
+        /* Transparent Invitation Card */
         .invitation-card {
-            background: rgba(255, 251, 240, 0.85);
-            backdrop-filter: blur(10px);
-            max-width: 700px;
+            background: rgba(255, 251, 240, 0.75);
+            backdrop-filter: blur(8px);
+            max-width: 500px;
             width: 100%;
-            border: 3px solid var(--gold);
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .invitation-card::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1px solid var(--gold);
-            pointer-events: none;
-        }
-
-        .invitation-card::after {
-            content: '';
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 70px;
-            background: var(--gold);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-
-        /* Ornamental Corners */
-        .ornament {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: var(--gold);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 5;
-        }
-
-        .ornament-top-left { top: -25px; left: -25px; }
-        .ornament-top-right { top: -25px; right: -25px; }
-        .ornament-bottom-left { bottom: -25px; left: -25px; }
-        .ornament-bottom-right { bottom: -25px; right: -25px; }
-
-        /* Card Content */
-        .content {
-            padding: 80px 40px 50px;
+            border: 2px solid var(--gold);
+            padding: 30px;
             text-align: center;
-        }
-
-        .decorative-line {
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 20px auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
         .scripture-text {
             font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--Burgundy);
-            margin-bottom: 8px;
-        }
-
-        .invite-text {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .couple-names {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin: 25px 0;
+            margin: 15px 0;
             line-height: 1.2;
         }
 
         .couple-names .ampersand {
             font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--gold-dark);
             display: block;
-            margin: 8px 0;
+            margin: 5px 0;
         }
 
-        .and-text {
-            font-size: 1.1rem;
-            color: var(--Burgundy);
-            margin: 15px 0;
-        }
-
-        /* Event Details Box */
         .event-details {
-            background: rgba(212, 175, 55, 0.1);
-            border: 2px dashed var(--gold);
-            border-radius: 10px;
-            padding: 25px;
-            margin: 30px 0;
-        }
-
-        .detail-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .detail-icon {
-            font-size: 1.5rem;
-        }
-
-        .detail-label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--Burgundy);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 3px;
-        }
-
-        .detail-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+            margin: 20px 0;
+            font-size: 1rem;
             color: var(--text-dark);
         }
 
-        /* Venue Box */
-        .venue-section {
-            background: rgba(114, 47, 55, 0.08);
-            border: 2px solid var(--Burgundy);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 25px 0;
+        .detail-row {
+            margin: 10px 0;
         }
 
-        .venue-title {
-            font-size: 0.85rem;
+        .detail-label {
+            font-size: 0.75rem;
             color: var(--Burgundy);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            letter-spacing: 1px;
         }
 
-        /* Buttons */
+        .detail-value {
+            font-weight: 600;
+        }
+
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .btn {
-            padding: 15px 30px;
-            font-size: 1rem;
+            padding: 12px 25px;
+            font-size: 0.9rem;
             font-weight: 600;
             border: none;
-            border-radius: 50px;
+            border-radius: 30px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -365,7 +123,6 @@
 
         .btn-rsvp:hover {
             background: var(--deep-red);
-            transform: translateY(-3px);
         }
 
         .btn-nav {
@@ -375,157 +132,70 @@
 
         .btn-nav:hover {
             background: var(--gold-dark);
-            transform: translateY(-3px);
-        }
-
-        /* QR Section */
-        .qr-section {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 90px;
-            height: 90px;
-            border: 3px solid var(--gold);
-            padding: 5px;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .qr-text {
-            font-size: 0.65rem;
-            color: var(--Burgundy);
-            margin-top: 5px;
-            letter-spacing: 1px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .temple-dome { width: 100px; height: 70px; }
-            .temple-dome::before { width: 25px; height: 25px; top: -20px; }
-            .temple-dome::after { width: 35px; height: 45px; top: 12px; }
-            .temple-building { width: 180px; height: 110px; }
-            .pillar { width: 18px; height: 90px; }
-            .entrance { width: 42px; height: 55px; }
-            .temple-base { width: 220px; height: 22px; }
-            .pillars { gap: 15px; }
-            .couple-names { font-size: 2rem; }
-            .scripture-text { font-size: 1.5rem; }
-            .invitation-card { margin: 0 10px; }
-            .content { padding: 60px 25px 40px; }
-            .qr-section { left: 15px; bottom: 15px; }
-            .qr-code { width: 70px; height: 70px; }
+            .invitation-card {
+                padding: 20px;
+                margin: 10px;
+            }
+            .couple-names {
+                font-size: 2rem;
+            }
+            .scripture-text {
+                font-size: 1.4rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .temple-dome { width: 70px; height: 50px; }
-            .temple-dome::before { width: 18px; height: 18px; top: -14px; }
-            .temple-dome::after { width: 25px; height: 30px; top: 8px; }
-            .temple-building { width: 130px; height: 80px; }
-            .pillar { width: 12px; height: 65px; }
-            .entrance { width: 30px; height: 40px; }
-            .temple-base { width: 160px; height: 16px; }
-            .pillars { gap: 10px; }
-            .couple-names { font-size: 1.5rem; }
-            .scripture-text { font-size: 1.2rem; }
-            .button-group { flex-direction: column; align-items: center; }
-            .btn { width: 100%; max-width: 200px; }
-            .qr-section { position: relative; margin-top: 20px; }
+            .invitation-card {
+                padding: 15px;
+            }
+            .couple-names {
+                font-size: 1.5rem;
+            }
+            .scripture-text {
+                font-size: 1.1rem;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 180px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Cartoon Temple Background -->
-    <div class="temple-hero">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        
-        <div class="cartoon-temple">
-            <div class="temple-dome"></div>
-            <div class="temple-building">
-                <div class="entrance"></div>
-                <div class="pillars">
-                    <div class="pillar"></div>
-                    <div class="pillar"></div>
-                    <div class="pillar"></div>
-                </div>
-            </div>
-            <div class="temple-base"></div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
     <div class="container">
         <div class="invitation-card">
-            <div class="ornament ornament-top-left"></div>
-            <div class="ornament ornament-top-right"></div>
-            <div class="ornament ornament-bottom-left"></div>
-            <div class="ornament ornament-bottom-right"></div>
+            <p class="scripture-text">"Two become one"</p>
             
-            <div class="content">
-                <p class="invite-text">You're Invited</p>
-                
-                <p class="scripture-text">"Two become one"</p>
-                
-                <div class="decorative-line"></div>
-                
-                <h1 class="couple-names">
-                    Janhavi
-                    <span class="ampersand">&</span>
-                    Rahul
-                </h1>
-                
-                <div class="decorative-line"></div>
-                
-                <p class="and-text">Request Your Presence at Their Wedding</p>
-                
-                <!-- Event Details -->
-                <div class="event-details">
-                    <div class="detail-row">
-                        <span class="detail-icon">📅</span>
-                        <div>
-                            <span class="detail-label">Date</span>
-                            <span class="detail-value">[Wedding Date]</span>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-icon">🕐</span>
-                        <div>
-                            <span class="detail-label">Time</span>
-                            <span class="detail-value">[Wedding Time]</span>
-                        </div>
-                    </div>
+            <h1 class="couple-names">
+                Janhavi
+                <span class="ampersand">&</span>
+                Rahul
+            </h1>
+            
+            <div class="event-details">
+                <div class="detail-row">
+                    <span class="detail-label">Date</span><br>
+                    <span class="detail-value">26th April 2026</span>
                 </div>
                 
-                <!-- Venue -->
-                <div class="venue-section">
-                    <p class="venue-title">Wedding Venue</p>
-                    <div class="detail-row">
-                        <span class="detail-icon">🏛️</span>
-                        <span class="detail-value">[Temple Name]</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-icon">📍</span>
-                        <span class="detail-value">[Full Address]</span>
-                    </div>
+                <div class="detail-row">
+                    <span class="detail-label">Time</span><br>
+                    <span class="detail-value">07:30 PM</span>
                 </div>
-                
-                <!-- Buttons -->
-                <div class="button-group">
-                    <a href="#rsvp" class="btn btn-rsvp">📝 Send RSVP</a>
-                    <a href="wedding-ceremony.html" class="btn btn-nav">🗓️ Ceremony</a>
-                    <a href="wedding-3d-viewer.html" class="btn btn-nav">🏛️ 3D Temple</a>
-                </div>
-                
-                <!-- QR Code -->
-                <div class="qr-section">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://rahulmanvatkar120-png.github.io/weding_invitation23/&bgcolor=FFFFFF&color=722F37" alt="QR Code" class="qr-code">
-                    <p class="qr-text">Scan for Details</p>
-                </div>
+            </div>
+            
+            <div class="button-group">
+                <a href="#rsvp" class="btn btn-rsvp">RSVP</a>
+                <a href="wedding-ceremony.html" class="btn btn-nav">Ceremony</a>
+                <a href="wedding-3d-viewer.html" class="btn btn-nav">3D Temple</a>
             </div>
         </div>
     </div>
