@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Temple - 3D Viewer | Sci-Fi Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Wedding Temple - 3D Viewer | Rahul ❤ Janhavi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-cyan: #00f7ff;
-            --neon-magenta: #ff00ff;
-            --neon-purple: #8b5cf6;
-            --neon-gold: #ffd700;
-            --neon-orange: #ff6b35;
-            --dark-bg: #0a0a1a;
-            --dark-surface: #12122a;
-            --temple-marble: #e8e0d0;
-            --temple-stone: #8b7355;
-            --temple-red: #8b2942;
+            --primary: #FF6B35;
+            --secondary: #F7C59F;
+            --accent: #2EC4B6;
+            --gold: #FFD700;
+            --sky: #87CEEB;
+            --temple-roof: #E74C3C;
+            --temple-wall: #F4A460;
+            --temple-border: #8B4513;
+            --cream: #FFF8F0;
         }
 
         * {
@@ -26,10 +25,10 @@
         }
 
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark-bg);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, var(--sky) 0%, var(--cream) 30%, var(--secondary) 100%);
             overflow: hidden;
-            color: #fff;
+            color: #1A1A2E;
         }
 
         #canvas-container {
@@ -51,1176 +50,354 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 30px;
+            padding: 20px;
         }
 
         .header-section {
             text-align: center;
             pointer-events: auto;
-            background: linear-gradient(180deg, rgba(10,10,26,0.9) 0%, transparent 100%);
+            background: linear-gradient(180deg, rgba(255,248,240,0.95) 0%, transparent 100%);
             padding: 20px;
+            border-radius: 0 0 20px 20px;
+            align-self: center;
         }
 
         .couple-names {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-gold), var(--neon-cyan));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-            text-shadow: 0 0 30px rgba(0,247,255,0.5);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        .wedding-date {
-            font-size: 1.2rem;
-            letter-spacing: 6px;
-            color: var(--neon-gold);
+        .viewer-title {
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-top: 10px;
-            font-weight: 500;
+            margin-top: 5px;
         }
 
-        .decorative-line {
-            width: 200px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-gold), var(--neon-orange), transparent);
-            margin: 15px auto;
-            box-shadow: 0 0 10px var(--neon-gold);
-        }
-
-        .controls {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 20;
+        .footer-section {
+            text-align: center;
             pointer-events: auto;
+            background: linear-gradient(0deg, rgba(255,248,240,0.95) 0%, transparent 100%);
+            padding: 20px;
+            border-radius: 20px 20px 0 0;
+            align-self: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
             flex-wrap: wrap;
-            justify-content: center;
-            background: rgba(18,18,42,0.9);
-            padding: 15px 25px;
-            border: 1px solid var(--neon-gold);
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
         }
 
-        .control-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid var(--neon-gold);
-            color: var(--neon-gold);
-            font-family: 'Rajdhani', sans-serif;
+        .nav-btn {
+            padding: 12px 25px;
             font-size: 0.9rem;
             font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
-            transition: 0.5s;
-        }
-
-        .control-btn:hover::before {
-            left: 100%;
-        }
-
-        .control-btn:hover,
-        .control-btn.active {
-            background: var(--neon-gold);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--neon-gold);
-        }
-
-        .nav-links {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 20;
-            pointer-events: auto;
-        }
-
-        .nav-link {
-            padding: 10px 20px;
-            background: rgba(18,18,42,0.9);
-            border: 1px solid var(--neon-orange);
-            color: var(--neon-orange);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .nav-link:hover {
-            background: var(--neon-orange);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--neon-orange);
-        }
-
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loading-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--neon-gold);
-            margin-bottom: 30px;
-            letter-spacing: 4px;
-        }
-
-        .loading-bar-container {
-            width: 300px;
-            height: 4px;
-            background: rgba(255,215,0,0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loading-progress {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 30%;
-            background: linear-gradient(90deg, var(--neon-gold), var(--neon-orange));
-            box-shadow: 0 0 20px var(--neon-gold);
-            animation: loading 1.5s ease-in-out infinite;
-        }
-
-        @keyframes loading {
-            0% { left: -30%; }
-            100% { left: 100%; }
-        }
-
-        .info-panel {
-            position: fixed;
-            bottom: 100px;
-            left: 30px;
-            background: rgba(18,18,42,0.95);
-            padding: 20px;
-            border: 1px solid var(--neon-gold);
-            z-index: 20;
-            max-width: 300px;
-            pointer-events: auto;
-            box-shadow: 0 0 15px rgba(255,215,0,0.3);
-        }
-
-        .info-panel h3 {
-            color: var(--neon-gold);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .info-panel p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #ccc;
-        }
-
-        .hint {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            background: rgba(18,18,42,0.95);
-            padding: 15px 20px;
-            border: 1px solid var(--neon-gold);
-            z-index: 20;
-            font-size: 0.85rem;
-            color: var(--neon-gold);
-            pointer-events: none;
-        }
-
-        /* Location Card */
-        .location-card {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: rgba(18,18,42,0.98);
-            border: 2px solid var(--neon-gold);
-            padding: 0;
-            z-index: 200;
-            max-width: 400px;
-            width: 90%;
-            border-radius: 10px;
-            box-shadow: 0 0 40px rgba(255,215,0,0.4), inset 0 0 30px rgba(255,215,0,0.1);
-            overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            pointer-events: auto;
-        }
-
-        .location-card.active {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .location-card-header {
-            background: linear-gradient(135deg, var(--neon-gold), var(--neon-orange));
-            padding: 20px;
-            text-align: center;
-        }
-
-        .location-card-header h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--dark-bg);
-            font-size: 1.3rem;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-
-        .location-card-body {
-            padding: 25px;
-        }
-
-        .location-card-body h4 {
-            color: var(--neon-gold);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .location-card-body p {
-            color: #ccc;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .location-details {
-            display: grid;
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .location-detail {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px;
-            background: rgba(255,215,0,0.1);
-            border-left: 3px solid var(--neon-gold);
-        }
-
-        .location-detail-icon {
-            font-size: 1.3rem;
-        }
-
-        .location-detail-text {
-            color: #ddd;
-            font-size: 0.9rem;
-        }
-
-        .location-detail-text strong {
-            color: var(--neon-gold);
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .location-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 35px;
-            height: 35px;
-            background: var(--dark-bg);
-            border: 1px solid var(--neon-gold);
-            color: var(--neon-gold);
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border-radius: 50%;
-        }
-
-        .location-close:hover {
-            background: var(--neon-gold);
-            color: var(--dark-bg);
-        }
-
-        .location-btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            margin-top: 15px;
-            background: var(--neon-gold);
             border: none;
-            color: var(--dark-bg);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            border-radius: 50px;
             cursor: pointer;
+            text-decoration: none;
             transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .location-btn:hover {
-            background: var(--neon-orange);
-            box-shadow: 0 0 20px var(--neon-orange);
+        .btn-home {
+            background: var(--primary);
+            color: white;
         }
 
-        /* Location Marker */
-        .location-marker {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            z-index: 20;
-            pointer-events: auto;
+        .btn-home:hover {
+            background: #FF8C5A;
+            transform: translateY(-2px);
         }
 
-        .marker-btn {
-            padding: 12px 20px;
-            background: rgba(18,18,42,0.9);
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .btn-invite {
+            background: var(--accent);
+            color: white;
         }
 
-        .marker-btn:hover {
-            background: var(--neon-cyan);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--neon-cyan);
+        .btn-invite:hover {
+            background: #4EEADC;
+            transform: translateY(-2px);
         }
 
-        .marker-icon {
-            font-size: 1.2rem;
+        .btn-ceremony {
+            background: var(--gold);
+            color: #1A1A2E;
         }
 
-        /* Overlay for location card */
-        .location-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 150;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        .btn-ceremony:hover {
+            background: #FFE44D;
+            transform: translateY(-2px);
         }
 
-        .location-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .instructions {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 10px;
         }
 
-        .corner-decor {
-            position: fixed;
-            width: 80px;
-            height: 80px;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .corner-decor::before,
-        .corner-decor::after {
-            content: '';
-            position: absolute;
-            background: var(--neon-gold);
-            box-shadow: 0 0 10px var(--neon-gold);
-        }
-
-        .corner-decor.top-left { top: 15px; left: 15px; }
-        .corner-decor.top-left::before { width: 30px; height: 2px; top: 0; left: 0; }
-        .corner-decor.top-left::after { width: 2px; height: 30px; top: 0; left: 0; }
-
-        .corner-decor.top-right { top: 15px; right: 15px; }
-        .corner-decor.top-right::before { width: 30px; height: 2px; top: 0; right: 0; }
-        .corner-decor.top-right::after { width: 2px; height: 30px; top: 0; right: 0; }
-
-        .corner-decor.bottom-left { bottom: 15px; left: 15px; }
-        .corner-decor.bottom-left::before { width: 30px; height: 2px; bottom: 0; left: 0; }
-        .corner-decor.bottom-left::after { width: 2px; height: 30px; bottom: 0; left: 0; }
-
-        .corner-decor.bottom-right { bottom: 15px; right: 15px; }
-        .corner-decor.bottom-right::before { width: 30px; height: 2px; bottom: 0; right: 0; }
-        .corner-decor.bottom-right::after { width: 2px; height: 30px; bottom: 0; right: 0; }
-
-        @media (max-width: 600px) {
-            .couple-names { font-size: 1.8rem; }
-            .overlay-content { padding: 15px; }
-            .controls { bottom: 15px; padding: 10px 15px; }
-            .control-btn { padding: 8px 12px; font-size: 0.75rem; }
-            .nav-links { top: 15px; right: 15px; }
-            .nav-link { padding: 8px 12px; font-size: 0.7rem; }
-            .info-panel { display: none; }
-            .hint { display: none; }
-        }
-
-        @media (max-width: 400px) {
-            .couple-names { font-size: 1.4rem; }
-            .wedding-date { font-size: 0.9rem; letter-spacing: 3px; }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 1.8rem;
+            }
+            .header-section, .footer-section {
+                padding: 15px;
+            }
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <div id="canvas-container"></div>
 
-    <div class="loading" id="loading">
-        <p class="loading-text">INITIALIZING TEMPLE VIEWER</p>
-        <div class="loading-bar-container">
-            <div class="loading-progress"></div>
-        </div>
-    </div>
-
-    <div class="corner-decor top-left"></div>
-    <div class="corner-decor top-right"></div>
-    <div class="corner-decor bottom-left"></div>
-    <div class="corner-decor bottom-right"></div>
-
     <div class="overlay-content">
         <div class="header-section">
-            <h1 class="couple-names">[Bride's Name] & [Groom's Name]</h1>
-            <p class="wedding-date">[WEDDING DATE]</p>
-            <div class="decorative-line"></div>
+            <h1 class="couple-names">Rahul ❤ Janhavi</h1>
+            <p class="viewer-title">3D Temple Viewer</p>
         </div>
 
-        <nav class="nav-links">
-            <a href="wedding-invitation.html" class="nav-link">Invitation</a>
-            <a href="wedding-ceremony.html" class="nav-link">Ceremony</a>
-        </nav>
-
-        <div class="info-panel">
-            <h3>🕉️ SACRED TEMPLE</h3>
-            <p>A traditional Hindu temple blendingsacred architecture with futuristic vision.</p>
-        </div>
-
-        <div class="hint">🖱️ DRAG TO ROTATE • SCROLL TO ZOOM</div>
-
-        <div class="controls">
-            <button class="control-btn" onclick="resetCamera()">Reset</button>
-            <button class="control-btn" id="rotateBtn" onclick="toggleAutoRotate()">Auto Rotate</button>
-            <button class="control-btn" onclick="toggleLighting()">Lights</button>
-            <button class="control-btn" onclick="toggleBloom()">Bloom</button>
-            <button class="control-btn" onclick="changeView('front')">Front</button>
-            <button class="control-btn" onclick="changeView('side')">Side</button>
-            <button class="control-btn" onclick="changeView('top')">Top</button>
-        </div>
-    </div>
-
-    <!-- Location Marker Button -->
-    <div class="location-marker">
-        <button class="marker-btn" onclick="openLocationCard()">
-            <span class="marker-icon">📍</span>
-            <span>Location</span>
-        </button>
-    </div>
-
-    <!-- Location Overlay -->
-    <div class="location-overlay" id="locationOverlay" onclick="closeLocationCard()"></div>
-
-    <!-- Location Card -->
-    <div class="location-card" id="locationCard">
-        <button class="location-close" onclick="closeLocationCard()">✕</button>
-        <div class="location-card-header">
-            <h3>🕉️ WEDDING VENUE</h3>
-        </div>
-        <div class="location-card-body">
-            <h4>Ceremony Location</h4>
-            <p>Join us at this sacred temple for our wedding ceremony. We look forward to sharing this special moment with you at this blessed venue.</p>
-            
-            <div class="location-details">
-                <div class="location-detail">
-                    <span class="location-detail-icon">🏛️</span>
-                    <div class="location-detail-text">
-                        <strong>Temple Name</strong>
-                        BAPS Swaminarayan Akshardham
-                    </div>
-                </div>
-                <div class="location-detail">
-                    <span class="location-detail-icon">📌</span>
-                    <div class="location-detail-text">
-                        <strong>Address</strong>
-                        1229 White Oak Road<br>
-                        Robbinsville, NJ 08691
-                    </div>
-                </div>
-                <div class="location-detail">
-                    <span class="location-detail-icon">📅</span>
-                    <div class="location-detail-text">
-                        <strong>Date & Time</strong>
-                        Saturday, December 15, 2024<br>
-                        10:00 AM - 12:00 PM
-                    </div>
-                </div>
-                <div class="location-detail">
-                    <span class="location-detail-icon">🚗</span>
-                    <div class="location-detail-text">
-                        <strong>Parking</strong>
-                        Free parking available on-site
-                    </div>
-                </div>
-                <div class="location-detail">
-                    <span class="location-detail-icon">👗</span>
-                    <div class="location-detail-text">
-                        <strong>Dress Code</strong>
-                        Traditional Indian Formal
-                    </div>
-                </div>
+        <div class="footer-section">
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn btn-home">🏠 Home</a>
+                <a href="wedding-invitation.html" class="nav-btn btn-invite">💌 Invitation</a>
+                <a href="wedding-ceremony.html" class="nav-btn btn-ceremony">🗓️ Ceremony</a>
             </div>
-
-            <button class="location-btn" onclick="openDirections()">
-                📍 Get Directions
-            </button>
+            <p class="instructions">🖱️ Click and drag to rotate • Scroll to zoom</p>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/CopyShader.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // Scene Setup
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0a1a);
-        scene.fog = new THREE.FogExp2(0x0a0a1a, 0.015);
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.Fog(0x87CEEB, 15, 50);
 
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(12, 6, 12);
-        camera.lookAt(0, 3, 0);
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(8, 5, 8);
+        camera.lookAt(0, 2, 0);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.shadowMap.type = THREE.SoftShadowMap;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        const composer = new THREE.EffectComposer(renderer);
-        const renderPass = new THREE.RenderPass(scene, camera);
-        composer.addPass(renderPass);
-
-        const bloomPass = new THREE.UnrealBloomPass(
-            new THREE.Vector2(window.innerWidth, window.innerHeight),
-            1.0, 0.4, 0.85
-        );
-        composer.addPass(bloomPass);
-
-        let bloomEnabled = true;
-
-        // Temple theme colors - Traditional with sci-fi glow
-        const colors = {
-            marble: 0xf5f0e6,
-            stone: 0x9a8b7a,
-            darkStone: 0x5c4d3d,
-            red: 0x8b2942,
-            gold: 0xffd700,
-            cyan: 0x00f7ff,
-            magenta: 0xff00ff,
-            purple: 0x8b5cf6,
-            orange: 0xff6b35
-        };
-
-        let lightsEnabled = true;
-        
-        const ambientLight = new THREE.AmbientLight(0x2a2a4a, 0.5);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xfff5e6, 1.5);
-        sunLight.position.set(15, 20, 15);
+        const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        sunLight.position.set(10, 15, 10);
         sunLight.castShadow = true;
         sunLight.shadow.mapSize.width = 2048;
         sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.camera.near = 1;
-        sunLight.shadow.camera.far = 60;
-        sunLight.shadow.camera.left = -20;
-        sunLight.shadow.camera.right = 20;
-        sunLight.shadow.camera.top = 20;
-        sunLight.shadow.camera.bottom = -20;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 50;
+        sunLight.shadow.camera.left = -15;
+        sunLight.shadow.camera.right = 15;
+        sunLight.shadow.camera.top = 15;
+        sunLight.shadow.camera.bottom = -15;
         scene.add(sunLight);
 
-        // Accent lights
-        const goldLight = new THREE.PointLight(colors.gold, 2, 25);
-        goldLight.position.set(-8, 5, 8);
-        scene.add(goldLight);
-
-        const orangeLight = new THREE.PointLight(colors.orange, 2, 25);
-        orangeLight.position.set(8, 5, -8);
-        scene.add(orangeLight);
-
-        const cyanLight = new THREE.PointLight(colors.cyan, 1.5, 20);
-        cyanLight.position.set(0, 10, 0);
-        scene.add(cyanLight);
-
-        // Starfield
-        function createStarfield() {
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsMaterial = new THREE.PointsMaterial({
-                color: colors.gold,
-                size: 0.15,
-                transparent: true,
-                opacity: 0.9
-            });
-            
-            const starsVertices = [];
-            for (let i = 0; i < 3000; i++) {
-                const x = (Math.random() - 0.5) * 250;
-                const y = Math.random() * 150;
-                const z = (Math.random() - 0.5) * 250;
-                starsVertices.push(x, y, z);
-            }
-            
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-            const starField = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(starField);
-        }
-        createStarfield();
+        // Materials
+        const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xF4A460 });
+        const roofMaterial = new THREE.MeshLambertMaterial({ color: 0xE74C3C });
+        const goldMaterial = new THREE.MeshLambertMaterial({ color: 0xFFD700 });
+        const stoneMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+        const floorMaterial = new THREE.MeshLambertMaterial({ color: 0xDEB887 });
 
         // Ground
-        function createGround() {
-            const groundGeo = new THREE.CircleGeometry(25, 64);
-            const groundMat = new THREE.MeshStandardMaterial({
-                color: 0x1a1a2a,
-                roughness: 0.9,
-                metalness: 0.1
-            });
-            const ground = new THREE.Mesh(groundGeo, groundMat);
-            ground.rotation.x = -Math.PI / 2;
-            ground.receiveShadow = true;
-            scene.add(ground);
+        const groundGeometry = new THREE.CircleGeometry(12, 32);
+        const ground = new THREE.Mesh(groundGeometry, floorMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
 
-            // Glowing concentric circles
-            for (let i = 1; i <= 5; i++) {
-                const ringGeo = new THREE.RingGeometry(i * 3 - 0.1, i * 3 + 0.1, 64);
-                const ringMat = new THREE.MeshBasicMaterial({
-                    color: i % 2 === 0 ? colors.gold : colors.orange,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    opacity: 0.15
-                });
-                const ring = new THREE.Mesh(ringGeo, ringMat);
-                ring.rotation.x = -Math.PI / 2;
-                ring.position.y = 0.02;
-                scene.add(ring);
-            }
+        // Temple Group
+        const temple = new THREE.Group();
 
-            // Outer glow ring
-            const outerRingGeo = new THREE.RingGeometry(15, 15.3, 64);
-            const outerRingMat = new THREE.MeshBasicMaterial({
-                color: colors.cyan,
-                side: THREE.DoubleSide,
-                transparent: true,
-                opacity: 0.4
-            });
-            const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
-            outerRing.rotation.x = -Math.PI / 2;
-            outerRing.position.y = 0.02;
-            scene.add(outerRing);
-        }
-        createGround();
-
-        // Materials
-        function createTempleMaterial(color, roughness = 0.6, metalness = 0.1) {
-            return new THREE.MeshStandardMaterial({
-                color: color,
-                roughness: roughness,
-                metalness: metalness
-            });
+        // Base/Steps
+        for (let i = 0; i < 3; i++) {
+            const stepGeometry = new THREE.BoxGeometry(5 + i * 0.8, 0.2, 5 + i * 0.8);
+            const step = new THREE.Mesh(stepGeometry, stoneMaterial);
+            step.position.y = i * 0.2;
+            step.receiveShadow = true;
+            step.castShadow = true;
+            temple.add(step);
         }
 
-        function createGlowingMaterial(color, intensity = 1.5) {
-            return new THREE.MeshStandardMaterial({
-                color: color,
-                emissive: color,
-                emissiveIntensity: intensity,
-                roughness: 0.2,
-                metalness: 0.8
-            });
-        }
+        // Main Building
+        const mainBuildingGeometry = new THREE.BoxGeometry(4, 3, 4);
+        const mainBuilding = new THREE.Mesh(mainBuildingGeometry, wallMaterial);
+        mainBuilding.position.y = 1.7;
+        mainBuilding.receiveShadow = true;
+        mainBuilding.castShadow = true;
+        temple.add(mainBuilding);
 
-        // Main temple group
-        const templeGroup = new THREE.Group();
+        // Dome
+        const domeGeometry = new THREE.SphereGeometry(1.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+        const dome = new THREE.Mesh(domeGeometry, roofMaterial);
+        dome.position.y = 3.2;
+        dome.castShadow = true;
+        temple.add(dome);
 
-        // Create detailed Hindu temple
-        function createHinduTemple() {
-            // === BASE PLATFORM (Adhisthana) ===
-            const adhisthanaLayers = [
-                { w: 12, h: 0.5, d: 12, y: 0.25 },
-                { w: 11, h: 0.4, d: 11, y: 0.7 },
-                { w: 10, h: 0.4, d: 10, y: 1.1 }
-            ];
+        // Dome Top
+        const domeTopGeometry = new THREE.ConeGeometry(0.4, 0.8, 16);
+        const domeTop = new THREE.Mesh(domeTopGeometry, goldMaterial);
+        domeTop.position.y = 3.9;
+        domeTop.castShadow = true;
+        temple.add(domeTop);
 
-            adhisthanaLayers.forEach(layer => {
-                const geo = new THREE.BoxGeometry(layer.w, layer.h, layer.d);
-                const mat = createTempleMaterial(colors.stone, 0.8, 0.1);
-                const mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = layer.y;
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-                templeGroup.add(mesh);
-            });
+        // Pillars
+        const pillarPositions = [
+            [-1.5, 0, -1.5], [1.5, 0, -1.5],
+            [-1.5, 0, 1.5], [1.5, 0, 1.5]
+        ];
 
-            // Base decorative molding
-            const moldingGeo = new THREE.BoxGeometry(12.2, 0.15, 12.2);
-            const moldingMat = createGlowingMaterial(colors.gold, 0.8);
-            const molding = new THREE.Mesh(moldingGeo, moldingMat);
-            molding.position.y = 1.45;
-            templeGroup.add(molding);
+        pillarPositions.forEach(pos => {
+            const pillarGeometry = new THREE.CylinderGeometry(0.15, 0.18, 2.5, 8);
+            const pillar = new THREE.Mesh(pillarGeometry, wallMaterial);
+            pillar.position.set(pos[0], 2.45, pos[2]);
+            pillar.castShadow = true;
+            temple.add(pillar);
+        });
 
-            // === STEPS (Truncated pyramidal steps) ===
-            for (let i = 0; i < 5; i++) {
-                const size = 9 + i * 2;
-                const stepGeo = new THREE.BoxGeometry(size, 0.25, size);
-                const stepMat = createTempleMaterial(colors.darkStone, 0.85, 0.05);
-                const step = new THREE.Mesh(stepGeo, stepMat);
-                step.position.y = i * 0.25;
-                step.castShadow = true;
-                step.receiveShadow = true;
-                templeGroup.add(step);
-            }
+        // Entrance Door
+        const doorGeometry = new THREE.BoxGeometry(0.8, 1.8, 0.1);
+        const doorMaterial = new THREE.MeshLambertMaterial({ color: 0x4A3728 });
+        const door = new THREE.Mesh(doorGeometry, doorMaterial);
+        door.position.set(0, 1.1, 2);
+        temple.add(door);
 
-            // === MANDAPA (Hall) - Front entrance area ===
-            const mandapaGeo = new THREE.BoxGeometry(6, 4, 4);
-            const mandapaMat = createTempleMaterial(colors.marble, 0.5, 0.15);
-            const mandapa = new THREE.Mesh(mandapaGeo, mandapaMat);
-            mandapa.position.set(0, 3.2, 3);
-            mandapa.castShadow = true;
-            templeGroup.add(mandapa);
+        // Door Arch
+        const archGeometry = new THREE.TorusGeometry(0.5, 0.08, 8, 16, Math.PI);
+        const arch = new THREE.Mesh(archGeometry, goldMaterial);
+        arch.position.set(0, 2.2, 2);
+        temple.add(arch);
 
-            // Mandapa roof
-            const mandapaRoofGeo = new THREE.BoxGeometry(7, 0.5, 5);
-            const mandapaRoof = new THREE.Mesh(mandapaRoofGeo, createTempleMaterial(colors.stone, 0.7, 0.1));
-            mandapaRoof.position.set(0, 5.45, 3);
-            mandapaRoof.castShadow = true;
-            templeGroup.add(mandapaRoof);
+        scene.add(temple);
 
-            // === MANDAPA PILLARS ===
-            const pillarPositions = [
-                [-2.5, 2.2, 4.5], [2.5, 2.2, 4.5],
-                [-2.5, 2.2, 1.5], [2.5, 2.2, 1.5]
-            ];
+        // Small Temple (Side Structure)
+        const smallTemple = temple.clone();
+        smallTemple.position.set(5, 0, 0);
+        smallTemple.scale.set(0.5, 0.5, 0.5);
+        scene.add(smallTemple);
 
-            pillarPositions.forEach(pos => {
-                // Main pillar
-                const pillarGeo = new THREE.CylinderGeometry(0.35, 0.4, 4.5, 12);
-                const pillarMat = createTempleMaterial(colors.stone, 0.6, 0.2);
-                const pillar = new THREE.Mesh(pillarGeo, pillarMat);
-                pillar.position.set(pos[0], pos[1], pos[2]);
-                pillar.castShadow = true;
-                templeGroup.add(pillar);
-
-                // Pillar base
-                const baseGeo = new THREE.CylinderGeometry(0.5, 0.45, 0.4, 12);
-                const base = new THREE.Mesh(baseGeo, pillarMat);
-                base.position.set(pos[0], 0.2, pos[2]);
-                templeGroup.add(base);
-
-                // Pillar capital
-                const capGeo = new THREE.CylinderGeometry(0.45, 0.35, 0.4, 12);
-                const cap = new THREE.Mesh(capGeo, createGlowingMaterial(colors.gold, 1));
-                cap.position.set(pos[0], pos[1] + 2.35, pos[2]);
-                templeGroup.add(cap);
-            });
-
-            // === ENTRANCE (Gopuram-style front) ===
-            // Entrance door frame
-            const doorFrameGeo = new THREE.BoxGeometry(2.2, 3.5, 0.4);
-            const doorFrameMat = createTempleMaterial(colors.darkStone, 0.5, 0.3);
-            const doorFrame = new THREE.Mesh(doorFrameGeo, doorFrameMat);
-            doorFrame.position.set(0, 2.75, 5.2);
-            templeGroup.add(doorFrame);
-
-            // Door glow
-            const doorGlowGeo = new THREE.BoxGeometry(1.8, 3.2, 0.1);
-            const doorGlowMat = createGlowingMaterial(colors.orange, 2);
-            const doorGlow = new THREE.Mesh(doorGlowGeo, doorGlowMat);
-            doorGlow.position.set(0, 2.75, 5.42);
-            templeGroup.add(doorGlow);
-
-            // Torana (arch) above entrance
-            const toranaGeo = new THREE.TorusGeometry(1.2, 0.15, 8, 16, Math.PI);
-            const toranaMat = createGlowingMaterial(colors.gold, 1.5);
-            const torana = new THREE.Mesh(toranaGeo, toranaMat);
-            torana.position.set(0, 5, 5);
-            torana.rotation.x = Math.PI;
-            templeGroup.add(torana);
-
-            // === MAIN SANCTUM (Garbhagriha) ===
-            const sanctumGeo = new THREE.BoxGeometry(5, 5, 5);
-            const sanctumMat = createTempleMaterial(colors.marble, 0.45, 0.15);
-            const sanctum = new THREE.Mesh(sanctumGeo, sanctumMat);
-            sanctum.position.set(0, 4.7, -1);
-            sanctum.castShadow = true;
-            templeGroup.add(sanctum);
-
-            // Sanctum side pillars (engaged)
-            const engagedPillarGeo = new THREE.BoxGeometry(0.5, 5, 0.5);
-            const engagedPillarMat = createTempleMaterial(colors.stone, 0.6, 0.15);
+        // Decorative Elements - Lamp Posts
+        const lampPositions = [[3, 0, 3], [-3, 0, 3], [3, 0, -3], [-3, 0, -3]];
+        
+        lampPositions.forEach(pos => {
+            const lampPost = new THREE.Group();
             
-            [[-2.5, -1], [2.5, -1], [-2.5, -3], [2.5, -3]].forEach(pos => {
-                const ep = new THREE.Mesh(engagedPillarGeo, engagedPillarMat);
-                ep.position.set(pos[0], 4.7, pos[1]);
-                ep.castShadow = true;
-                templeGroup.add(ep);
-            });
-
-            // === VIMANA (Tower above sanctum) ===
-            // Square base of vimana
-            const vimanaBaseGeo = new THREE.BoxGeometry(4, 1.5, 4);
-            const vimanaBaseMat = createTempleMaterial(colors.stone, 0.55, 0.2);
-            const vimanaBase = new THREE.Mesh(vimanaBaseGeo, vimanaBaseMat);
-            vimanaBase.position.set(0, 8.35, -1);
-            vimanaBase.castShadow = true;
-            templeGroup.add(vimanaBase);
-
-            // Vimana tier 1
-            const vimana1Geo = new THREE.BoxGeometry(3.2, 1.2, 3.2);
-            const vimana1 = new THREE.Mesh(vimana1Geo, vimanaBaseMat);
-            vimana1.position.set(0, 9.5, -1);
-            vimana1.castShadow = true;
-            templeGroup.add(vimana1);
-
-            // Vimana tier 2
-            const vimana2Geo = new THREE.BoxGeometry(2.4, 1, 2.4);
-            const vimana2 = new THREE.Mesh(vimana2Geo, vimanaBaseMat);
-            vimana2.position.set(0, 10.6, -1);
-            vimana2.castShadow = true;
-            templeGroup.add(vimana2);
-
-            // Vimana tier 3 (smaller)
-            const vimana3Geo = new THREE.BoxGeometry(1.6, 0.8, 1.6);
-            const vimana3 = new THREE.Mesh(vimana3Geo, vimanaBaseMat);
-            vimana3.position.set(0, 11.5, -1);
-            vimana3.castShadow = true;
-            templeGroup.add(vimana3);
-
-            // === SHIKHARA (Spire) ===
-            const shikharaGeo = new THREE.ConeGeometry(0.8, 4, 16);
-            const shikharaMat = createTempleMaterial(colors.marble, 0.4, 0.2);
-            const shikhara = new THREE.Mesh(shikharaGeo, shikharaMat);
-            shikhara.position.set(0, 14.1, -1);
-            shikhara.castShadow = true;
-            templeGroup.add(shikhara);
-
-            // === KALASHA (Top ornament) ===
-            const kalashaGeo = new THREE.SphereGeometry(0.5, 16, 16);
-            const kalashaMat = createGlowingMaterial(colors.gold, 3);
-            const kalasha = new THREE.Mesh(kalashaGeo, kalashaMat);
-            kalasha.position.set(0, 16.3, -1);
-            templeGroup.add(kalasha);
-
-            // Kalasha point light
-            const kalashaLight = new THREE.PointLight(colors.gold, 2, 8);
-            kalashaLight.position.set(0, 16.3, -1);
-            templeGroup.add(kalashaLight);
-
-            // === SIDE TOWERS (Secondary shrines) ===
-            const sideShrinePositions = [[-5, 0], [5, 0]];
+            const postGeometry = new THREE.CylinderGeometry(0.05, 0.08, 1.5, 8);
+            const post = new THREE.Mesh(postGeometry, stoneMaterial);
+            post.position.y = 0.75;
+            lampPost.add(post);
             
-            sideShrinePositions.forEach(pos => {
-                // Side shrine base
-                const sideGeo = new THREE.BoxGeometry(2, 3, 2);
-                const sideMat = createTempleMaterial(colors.stone, 0.6, 0.15);
-                const sideShrine = new THREE.Mesh(sideGeo, sideMat);
-                sideShrine.position.set(pos[0], 2.6, 0);
-                sideShrine.castShadow = true;
-                templeGroup.add(sideShrine);
-
-                // Side dome
-                const sideDomeGeo = new THREE.SphereGeometry(1, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2);
-                const sideDomeMat = createTempleMaterial(colors.stone, 0.5, 0.2);
-                const sideDome = new THREE.Mesh(sideDomeGeo, sideDomeMat);
-                sideDome.position.set(pos[0], 4.2, 0);
-                sideDome.castShadow = true;
-                templeGroup.add(sideDome);
-
-                // Side tower
-                const sideTowerGeo = new THREE.ConeGeometry(0.4, 1.5, 8);
-                const sideTower = new THREE.Mesh(sideTowerGeo, sideDomeMat);
-                sideTower.position.set(pos[0], 5.5, 0);
-                sideTower.castShadow = true;
-                templeGroup.add(sideTower);
-
-                // Side shrine glow
-                const sideGlowGeo = new THREE.RingGeometry(0.8, 1, 16);
-                const sideGlowMat = createGlowingMaterial(colors.cyan, 1.2);
-                const sideGlow = new THREE.Mesh(sideGlowGeo, sideGlowMat);
-                sideGlow.rotation.x = -Math.PI / 2;
-                sideGlow.position.set(pos[0], 4.25, 0);
-                templeGroup.add(sideGlow);
-            });
-
-            // === DECORATIVE ELEMENTS ===
-            // Corner decorations
-            const corners = [
-                [-3, 2.2, 2], [3, 2.2, 2],
-                [-3, 2.2, -3], [3, 2.2, -3]
-            ];
-
-            corners.forEach(pos => {
-                const decoGeo = new THREE.OctahedronGeometry(0.25, 0);
-                const decoMat = createGlowingMaterial(colors.orange, 1.5);
-                const deco = new THREE.Mesh(decoGeo, decoMat);
-                deco.position.set(...pos);
-                templeGroup.add(deco);
-            });
-
-            // Wall moldings (kuta) on sanctum
-            for (let i = 0; i < 4; i++) {
-                const kutaGeo = new THREE.BoxGeometry(0.3, 4, 0.3);
-                const kutaMat = createTempleMaterial(colors.stone, 0.6, 0.15);
-                const kuta = new THREE.Mesh(kutaGeo, kutaMat);
-                const angle = (i / 4) * Math.PI * 2;
-                kuta.position.set(
-                    Math.cos(angle) * 2.3,
-                    4.7,
-                    Math.sin(angle) * 2.3 - 1
-                );
-                templeGroup.add(kuta);
-            }
-
-            // Flying beams (patta) decorations
-            const pattaGeo = new THREE.BoxGeometry(0.2, 0.2, 2);
-            const pattaMat = createGlowingMaterial(colors.cyan, 0.8);
+            const lampGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+            const lampMaterial = new THREE.MeshLambertMaterial({ color: 0xFFD700, emissive: 0xFFD700, emissiveIntensity: 0.3 });
+            const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
+            lamp.position.y = 1.6;
+            lampPost.add(lamp);
             
-            for (let i = 0; i < 4; i++) {
-                const patta = new THREE.Mesh(pattaGeo, pattaMat);
-                const angle = (i / 4) * Math.PI * 2;
-                patta.position.set(
-                    Math.cos(angle) * 2.5,
-                    7.3,
-                    Math.sin(angle) * 2.5 - 1
-                );
-                patta.rotation.y = angle;
-                templeGroup.add(patta);
-            }
+            lampPost.position.set(pos[0], pos[1], pos[2]);
+            scene.add(lampPost);
+        });
 
-            scene.add(templeGroup);
-        }
+        // Flowers/Rangoli
+        const rangoliGeometry = new THREE.CircleGeometry(1.5, 6);
+        const rangoliMaterial = new THREE.MeshBasicMaterial({ color: 0xE74C3C });
+        const rangoli = new THREE.Mesh(rangoliGeometry, rangoliMaterial);
+        rangoli.rotation.x = -Math.PI / 2;
+        rangoli.position.y = 0.05;
+        scene.add(rangoli);
 
-        createHinduTemple();
-
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-        }, 2000);
-
-        let autoRotate = false;
-        let autoRotateSpeed = 0.003;
-
-        function toggleAutoRotate() {
-            autoRotate = !autoRotate;
-            document.getElementById('rotateBtn').classList.toggle('active', autoRotate);
-        }
-
-        function toggleLighting() {
-            lightsEnabled = !lightsEnabled;
-            if (lightsEnabled) {
-                scene.add(ambientLight);
-                scene.add(sunLight);
-                scene.add(goldLight);
-                scene.add(orangeLight);
-                scene.add(cyanLight);
-            } else {
-                scene.remove(ambientLight);
-                scene.remove(sunLight);
-                scene.remove(goldLight);
-                scene.remove(orangeLight);
-                scene.remove(cyanLight);
-            }
-        }
-
-        function toggleBloom() {
-            bloomEnabled = !bloomEnabled;
-            bloomPass.enabled = bloomEnabled;
-        }
-
-        // Location card functions
-        function openLocationCard() {
-            document.getElementById('locationCard').classList.add('active');
-            document.getElementById('locationOverlay').classList.add('active');
-        }
-
-        function closeLocationCard() {
-            document.getElementById('locationCard').classList.remove('active');
-            document.getElementById('locationOverlay').classList.remove('active');
-        }
-
-        function openDirections() {
-            // BAPS Swaminarayan Akshardham New Jersey
-            window.open('https://www.google.com/maps/search/?api=1&query=BAPS+Swaminarayan+Akshardham+1229+White+Oak+Road+Robbinsville+NJ', '_blank');
-        }
-
-        function resetCamera() {
-            camera.position.set(12, 6, 12);
-            camera.lookAt(0, 3, 0);
-            theta = Math.PI / 4;
-            phi = Math.PI / 4;
-            radius = 17;
-        }
-
-        function changeView(view) {
-            const views = {
-                front: { pos: [0, 5, 18], look: [0, 4, 0] },
-                side: { pos: [18, 5, 0], look: [0, 4, 0] },
-                top: { pos: [0, 25, 0.1], look: [0, 0, 0] }
-            };
-            
-            if (views[view]) {
-                camera.position.set(...views[view].pos);
-                camera.lookAt(...views[view].look);
-                theta = Math.atan2(views[view].pos[2], views[view].pos[0]);
-                phi = view === 'top' ? 0.01 : Math.PI / 4;
-                radius = 18;
-            }
-        }
-
+        // Mouse Controls
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
-        let theta = Math.PI / 4;
-        let phi = Math.PI / 4;
-        let radius = 17;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
 
-        document.addEventListener('mousedown', (e) => {
-            if (e.target === renderer.domElement) {
-                isDragging = true;
-                previousMousePosition = { x: e.clientX, y: e.clientY };
-            }
+        renderer.domElement.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            previousMousePosition = { x: e.clientX, y: e.clientY };
         });
 
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-
-        document.addEventListener('mousemove', (e) => {
+        renderer.domElement.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             
             const deltaX = e.clientX - previousMousePosition.x;
             const deltaY = e.clientY - previousMousePosition.y;
             
-            theta -= deltaX * 0.01;
-            phi = Math.max(0.1, Math.min(Math.PI / 2 - 0.1, phi - deltaY * 0.01));
+            targetRotationY += deltaX * 0.01;
+            targetRotationX += deltaY * 0.01;
             
-            updateCameraPosition();
             previousMousePosition = { x: e.clientX, y: e.clientY };
         });
 
-        document.addEventListener('touchstart', (e) => {
-            if (e.target === renderer.domElement) {
-                isDragging = true;
-                previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            }
+        renderer.domElement.addEventListener('mouseup', () => { isDragging = false; });
+        renderer.domElement.addEventListener('mouseleave', () => { isDragging = false; });
+
+        // Touch Controls
+        renderer.domElement.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
         });
 
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging || e.target !== renderer.domElement) return;
+        renderer.domElement.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
             
             const deltaX = e.touches[0].clientX - previousMousePosition.x;
             const deltaY = e.touches[0].clientY - previousMousePosition.y;
             
-            theta -= deltaX * 0.01;
-            phi = Math.max(0.1, Math.min(Math.PI / 2 - 0.1, phi - deltaY * 0.01));
+            targetRotationY += deltaX * 0.01;
+            targetRotationX += deltaY * 0.01;
             
-            updateCameraPosition();
             previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            e.preventDefault();
-        }, { passive: false });
-
-        document.addEventListener('touchend', () => {
-            isDragging = false;
         });
 
-        function updateCameraPosition() {
-            camera.position.x = radius * Math.sin(phi) * Math.cos(theta);
-            camera.position.y = radius * Math.cos(phi) + 3;
-            camera.position.z = radius * Math.sin(phi) * Math.sin(theta);
-            camera.lookAt(0, 4, 0);
+        renderer.domElement.addEventListener('touchend', () => { isDragging = false; });
+
+        // Zoom
+        renderer.domElement.addEventListener('wheel', (e) => {
+            camera.position.z += e.deltaY * 0.01;
+            camera.position.z = Math.max(5, Math.min(20, camera.position.z));
+        });
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            temple.rotation.y += (targetRotationY - temple.rotation.y) * 0.1;
+            temple.rotation.x += (targetRotationX - temple.rotation.x) * 0.1;
+            
+            // Gentle auto-rotation when not dragging
+            if (!isDragging) {
+                temple.rotation.y += 0.002;
+            }
+            
+            renderer.render(scene, camera);
         }
 
-        document.addEventListener('wheel', (e) => {
-            radius = Math.max(8, Math.min(35, radius + e.deltaY * 0.01));
-            updateCameraPosition();
-        });
+        animate();
 
+        // Window Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            if (autoRotate) {
-                theta += autoRotateSpeed;
-                updateCameraPosition();
-            }
-
-            const time = Date.now() * 0.001;
-            
-            // Animate lights
-            goldLight.intensity = 2 + Math.sin(time * 2) * 0.5;
-            orangeLight.intensity = 2 + Math.cos(time * 2) * 0.5;
-            cyanLight.intensity = 1.5 + Math.sin(time * 3) * 0.3;
-            
-            // Animate kalasha glow
-            const kalasha = templeGroup.children.find(c => c.position.y === 16.3 && c.type === 'Mesh');
-            if (kalasha && kalasha.material.emissiveIntensity !== undefined) {
-                kalasha.material.emissiveIntensity = 2.5 + Math.sin(time * 4) * 0.5;
-            }
-            
-            if (bloomEnabled) {
-                composer.render();
-            } else {
-                renderer.render(scene, camera);
-            }
-        }
-
-        animate();
     </script>
 </body>
 </html>
