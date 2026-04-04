@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation - Janhavi & Rahul</title>
+    <title>Hindu Temple - Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         * {
@@ -37,6 +37,121 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+        }
+
+        /* Home Page Layout - Image Right Side */
+        .home-page {
+            display: flex;
+            flex-direction: row;
+            max-width: 1200px;
+            width: 100%;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .home-content {
+            flex: 1;
+            background: rgba(255, 251, 240, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--gold);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .home-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home-image {
+            width: 100%;
+            max-width: 500px;
+            border: 3px solid var(--gold);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .home-section-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--Burgundy);
+            margin-bottom: 20px;
+        }
+
+        .home-welcome-text {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .home-temple-info {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .info-item {
+            margin: 15px 0;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--Burgundy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-top: 5px;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .btn-primary {
+            background: var(--Burgundy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-red);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--gold);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
         }
 
         /* Transparent Invitation Card */
@@ -135,7 +250,36 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .home-page {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .home-content, 
+            .home-image-container {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .home-content {
+                padding: 25px;
+            }
+            
+            .home-section-title {
+                font-size: 2rem;
+            }
+            
+            .home-welcome-text {
+                font-size: 1.1rem;
+            }
+            
+            .home-image {
+                max-width: 100%;
+            }
+            
             .invitation-card {
                 padding: 20px;
                 margin: 10px;
@@ -149,6 +293,28 @@
         }
 
         @media (max-width: 480px) {
+            .home-content {
+                padding: 15px;
+            }
+            
+            .home-section-title {
+                font-size: 1.6rem;
+            }
+            
+            .home-welcome-text {
+                font-size: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
             .invitation-card {
                 padding: 15px;
             }
@@ -171,31 +337,61 @@
 </head>
 <body>
     <div class="container">
-        <div class="invitation-card">
-            <p class="scripture-text">"Two become one"</p>
-            
-            <h1 class="couple-names">
-                Janhavi
-                <span class="ampersand">&</span>
-                Rahul
-            </h1>
-            
-            <div class="event-details">
-                <div class="detail-row">
-                    <span class="detail-label">Date</span><br>
-                    <span class="detail-value">26th April 2026</span>
+        <div class="home-page">
+            <!-- Home Page Content - Left Side -->
+            <div class="home-content">
+                <h1 class="home-section-title">Welcome to Our Temple</h1>
+                
+                <p class="home-welcome-text">
+                    Experience the divine beauty of our Hindu temple through this interactive digital experience. 
+                    Join us in celebrating the sacred union of two souls in the presence of Lord Vishnu and Goddess Lakshmi.
+                </p>
+                
+                <div class="home-temple-info">
+                    <div class="info-item">
+                        <div class="info-label">Temple Name</div>
+                        <div class="info-value">Sri Venkateswara Temple</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Deity</div>
+                        <div class="info-value">Lord Venkateswara & Goddess Lakshmi</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Architecture</div>
+                        <div class="info-value">Dravidian Style</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Location</div>
+                        <div class="info-value">Tirumala Hills</div>
+                    </div>
                 </div>
                 
-                <div class="detail-row">
-                    <span class="detail-label">Time</span><br>
-                    <span class="detail-value">07:30 PM</span>
+                <div class="nav-buttons">
+                    <a href="wedding-ceremony.html" class="btn btn-primary">Wedding Ceremony</a>
+                    <a href="wedding-3d-viewer.html" class="btn btn-secondary">View 3D Temple</a>
+                    <a href="wedding-invitation.html" class="btn btn-secondary">Invitation</a>
                 </div>
             </div>
             
-            <div class="button-group">
-                <a href="#rsvp" class="btn btn-rsvp">RSVP</a>
-                <a href="wedding-ceremony.html" class="btn btn-nav">Ceremony</a>
-                <a href="wedding-3d-viewer.html" class="btn btn-nav">3D Temple</a>
+            <!-- Home Image - Right Side -->
+            <div class="home-image-container">
+                <img src="background.JPG" alt="Hindu Temple" class="home-image">
+                
+                <!-- Home Page Below Image -->
+                <div class="home-content" style="margin-top: 30px;">
+                    <h2 class="home-section-title" style="font-size: 1.8rem;">Sacred Union</h2>
+                    <p class="home-welcome-text" style="font-size: 1.1rem;">
+                        Janhavi & Rahul
+                        <br><br>
+                        <strong>26th April 2026 at 07:30 PM</strong>
+                    </p>
+                    <div class="nav-buttons">
+                        <a href="#rsvp" class="btn btn-primary">RSVP</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
