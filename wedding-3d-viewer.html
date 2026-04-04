@@ -5,166 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Temple - 3D Viewer | Rahul ❤ Janhavi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #FF6B35;
-            --secondary: #F7C59F;
-            --accent: #2EC4B6;
-            --gold: #FFD700;
-            --sky: #87CEEB;
-            --temple-roof: #E74C3C;
-            --temple-wall: #F4A460;
-            --temple-border: #8B4513;
-            --cream: #FFF8F0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, var(--sky) 0%, var(--cream) 30%, var(--secondary) 100%);
-            overflow: hidden;
-            color: #1A1A2E;
-        }
-
-        #canvas-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .overlay-content {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        .header-section {
-            text-align: center;
-            pointer-events: auto;
-            background: linear-gradient(180deg, rgba(255,248,240,0.95) 0%, transparent 100%);
-            padding: 20px;
-            border-radius: 0 0 20px 20px;
-            align-self: center;
-        }
-
-        .couple-names {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: var(--primary);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .viewer-title {
-            font-size: 1rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        .footer-section {
-            text-align: center;
-            pointer-events: auto;
-            background: linear-gradient(0deg, rgba(255,248,240,0.95) 0%, transparent 100%);
-            padding: 20px;
-            border-radius: 20px 20px 0 0;
-            align-self: center;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn-home {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-home:hover {
-            background: #FF8C5A;
-            transform: translateY(-2px);
-        }
-
-        .btn-invite {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-invite:hover {
-            background: #4EEADC;
-            transform: translateY(-2px);
-        }
-
-        .btn-ceremony {
-            background: var(--gold);
-            color: #1A1A2E;
-        }
-
-        .btn-ceremony:hover {
-            background: #FFE44D;
-            transform: translateY(-2px);
-        }
-
-        .instructions {
-            font-size: 0.75rem;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .couple-names {
-                font-size: 1.8rem;
-            }
-            .header-section, .footer-section {
-                padding: 15px;
-            }
-            .nav-btn {
-                padding: 10px 18px;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading Temple...</p>
+        <p class="loading-subtext"><span id="loading-percent">0</span>%</p>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="error-message">
+        <h3 class="error-title">Unable to Load 3D Model</h3>
+        <p class="error-text">There was an issue loading the temple model. Showing a placeholder instead.</p>
+        <button id="retry-btn" class="error-btn">Try Again</button>
+    </div>
+
+    <!-- 3D Canvas Container -->
     <div id="canvas-container"></div>
 
+    <!-- Decorative Frame -->
+    <div class="viewer-frame"></div>
+
+    <!-- Overlay Content -->
     <div class="overlay-content">
+        <!-- Header -->
         <div class="header-section">
             <h1 class="couple-names">Rahul ❤ Janhavi</h1>
             <p class="viewer-title">3D Temple Viewer</p>
         </div>
 
+        <!-- Footer -->
         <div class="footer-section">
             <div class="nav-buttons">
                 <a href="index.html" class="nav-btn btn-home">🏠 Home</a>
@@ -175,229 +47,16 @@
         </div>
     </div>
 
+    <!-- Control Buttons -->
+    <div class="control-buttons">
+        <button id="reset-btn" class="control-btn" title="Reset View">↺</button>
+        <button id="rotate-btn" class="control-btn active" title="Toggle Auto Rotate">⟳</button>
+    </div>
+
+    <!-- Three.js and GLTFLoader from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Scene Setup
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87CEEB);
-        scene.fog = new THREE.Fog(0x87CEEB, 15, 50);
-
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(8, 5, 8);
-        camera.lookAt(0, 2, 0);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.SoftShadowMap;
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-
-        const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        sunLight.position.set(10, 15, 10);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.camera.near = 0.5;
-        sunLight.shadow.camera.far = 50;
-        sunLight.shadow.camera.left = -15;
-        sunLight.shadow.camera.right = 15;
-        sunLight.shadow.camera.top = 15;
-        sunLight.shadow.camera.bottom = -15;
-        scene.add(sunLight);
-
-        // Materials
-        const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xF4A460 });
-        const roofMaterial = new THREE.MeshLambertMaterial({ color: 0xE74C3C });
-        const goldMaterial = new THREE.MeshLambertMaterial({ color: 0xFFD700 });
-        const stoneMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
-        const floorMaterial = new THREE.MeshLambertMaterial({ color: 0xDEB887 });
-
-        // Ground
-        const groundGeometry = new THREE.CircleGeometry(12, 32);
-        const ground = new THREE.Mesh(groundGeometry, floorMaterial);
-        ground.rotation.x = -Math.PI / 2;
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        // Temple Group
-        const temple = new THREE.Group();
-
-        // Base/Steps
-        for (let i = 0; i < 3; i++) {
-            const stepGeometry = new THREE.BoxGeometry(5 + i * 0.8, 0.2, 5 + i * 0.8);
-            const step = new THREE.Mesh(stepGeometry, stoneMaterial);
-            step.position.y = i * 0.2;
-            step.receiveShadow = true;
-            step.castShadow = true;
-            temple.add(step);
-        }
-
-        // Main Building
-        const mainBuildingGeometry = new THREE.BoxGeometry(4, 3, 4);
-        const mainBuilding = new THREE.Mesh(mainBuildingGeometry, wallMaterial);
-        mainBuilding.position.y = 1.7;
-        mainBuilding.receiveShadow = true;
-        mainBuilding.castShadow = true;
-        temple.add(mainBuilding);
-
-        // Dome
-        const domeGeometry = new THREE.SphereGeometry(1.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-        const dome = new THREE.Mesh(domeGeometry, roofMaterial);
-        dome.position.y = 3.2;
-        dome.castShadow = true;
-        temple.add(dome);
-
-        // Dome Top
-        const domeTopGeometry = new THREE.ConeGeometry(0.4, 0.8, 16);
-        const domeTop = new THREE.Mesh(domeTopGeometry, goldMaterial);
-        domeTop.position.y = 3.9;
-        domeTop.castShadow = true;
-        temple.add(domeTop);
-
-        // Pillars
-        const pillarPositions = [
-            [-1.5, 0, -1.5], [1.5, 0, -1.5],
-            [-1.5, 0, 1.5], [1.5, 0, 1.5]
-        ];
-
-        pillarPositions.forEach(pos => {
-            const pillarGeometry = new THREE.CylinderGeometry(0.15, 0.18, 2.5, 8);
-            const pillar = new THREE.Mesh(pillarGeometry, wallMaterial);
-            pillar.position.set(pos[0], 2.45, pos[2]);
-            pillar.castShadow = true;
-            temple.add(pillar);
-        });
-
-        // Entrance Door
-        const doorGeometry = new THREE.BoxGeometry(0.8, 1.8, 0.1);
-        const doorMaterial = new THREE.MeshLambertMaterial({ color: 0x4A3728 });
-        const door = new THREE.Mesh(doorGeometry, doorMaterial);
-        door.position.set(0, 1.1, 2);
-        temple.add(door);
-
-        // Door Arch
-        const archGeometry = new THREE.TorusGeometry(0.5, 0.08, 8, 16, Math.PI);
-        const arch = new THREE.Mesh(archGeometry, goldMaterial);
-        arch.position.set(0, 2.2, 2);
-        temple.add(arch);
-
-        scene.add(temple);
-
-        // Small Temple (Side Structure)
-        const smallTemple = temple.clone();
-        smallTemple.position.set(5, 0, 0);
-        smallTemple.scale.set(0.5, 0.5, 0.5);
-        scene.add(smallTemple);
-
-        // Decorative Elements - Lamp Posts
-        const lampPositions = [[3, 0, 3], [-3, 0, 3], [3, 0, -3], [-3, 0, -3]];
-        
-        lampPositions.forEach(pos => {
-            const lampPost = new THREE.Group();
-            
-            const postGeometry = new THREE.CylinderGeometry(0.05, 0.08, 1.5, 8);
-            const post = new THREE.Mesh(postGeometry, stoneMaterial);
-            post.position.y = 0.75;
-            lampPost.add(post);
-            
-            const lampGeometry = new THREE.SphereGeometry(0.15, 8, 8);
-            const lampMaterial = new THREE.MeshLambertMaterial({ color: 0xFFD700, emissive: 0xFFD700, emissiveIntensity: 0.3 });
-            const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
-            lamp.position.y = 1.6;
-            lampPost.add(lamp);
-            
-            lampPost.position.set(pos[0], pos[1], pos[2]);
-            scene.add(lampPost);
-        });
-
-        // Flowers/Rangoli
-        const rangoliGeometry = new THREE.CircleGeometry(1.5, 6);
-        const rangoliMaterial = new THREE.MeshBasicMaterial({ color: 0xE74C3C });
-        const rangoli = new THREE.Mesh(rangoliGeometry, rangoliMaterial);
-        rangoli.rotation.x = -Math.PI / 2;
-        rangoli.position.y = 0.05;
-        scene.add(rangoli);
-
-        // Mouse Controls
-        let isDragging = false;
-        let previousMousePosition = { x: 0, y: 0 };
-        let targetRotationX = 0;
-        let targetRotationY = 0;
-
-        renderer.domElement.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            previousMousePosition = { x: e.clientX, y: e.clientY };
-        });
-
-        renderer.domElement.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
-            const deltaX = e.clientX - previousMousePosition.x;
-            const deltaY = e.clientY - previousMousePosition.y;
-            
-            targetRotationY += deltaX * 0.01;
-            targetRotationX += deltaY * 0.01;
-            
-            previousMousePosition = { x: e.clientX, y: e.clientY };
-        });
-
-        renderer.domElement.addEventListener('mouseup', () => { isDragging = false; });
-        renderer.domElement.addEventListener('mouseleave', () => { isDragging = false; });
-
-        // Touch Controls
-        renderer.domElement.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        });
-
-        renderer.domElement.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            
-            const deltaX = e.touches[0].clientX - previousMousePosition.x;
-            const deltaY = e.touches[0].clientY - previousMousePosition.y;
-            
-            targetRotationY += deltaX * 0.01;
-            targetRotationX += deltaY * 0.01;
-            
-            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        });
-
-        renderer.domElement.addEventListener('touchend', () => { isDragging = false; });
-
-        // Zoom
-        renderer.domElement.addEventListener('wheel', (e) => {
-            camera.position.z += e.deltaY * 0.01;
-            camera.position.z = Math.max(5, Math.min(20, camera.position.z));
-        });
-
-        // Animation Loop
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            temple.rotation.y += (targetRotationY - temple.rotation.y) * 0.1;
-            temple.rotation.x += (targetRotationX - temple.rotation.x) * 0.1;
-            
-            // Gentle auto-rotation when not dragging
-            if (!isDragging) {
-                temple.rotation.y += 0.002;
-            }
-            
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // Window Resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
 </body>
 </html>

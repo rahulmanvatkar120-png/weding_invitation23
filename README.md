@@ -37,6 +37,19 @@ Then visit http://localhost:8000 in your browser.
 ### Viewing the 3D Model
 Open `wedding-3d-viewer.html` in a modern web browser to view the temple model.
 
+### Converting the 3D Model to GLB Format
+The 3D viewer requires the temple model in GLB format. To convert your Blender file:
+
+1. Open Blender
+2. Open `source/only temple.blend`
+3. Go to File > Export > glTF 2.0 (.glb/.gltf)
+4. In export settings:
+   - Format: glTF Binary (.glb)
+   - Check "Include > Selected Objects" if needed
+   - Check "Geometry > Apply Modifiers"
+5. Save as: `source/temple.glb`
+6. The 3D viewer will automatically load this file
+
 ## Live Demo
 
 View the deployed site at: https://rahulmanvatkar120-png.github.io/
