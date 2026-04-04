@@ -14,30 +14,18 @@ let previousMousePosition = { x: 0, y: 0 };
 let targetRotationX = 0;
 let targetRotationY = 0;
 let targetZoom = 10;
-let autoRotateSpeed = 0.002;
+let autoRotateSpeed = 0.005;
 
 // Initialize the viewer
 function init() {
     // Scene setup
     scene = new THREE.Scene();
     
-    // Warm wedding gradient background
-    const canvas = document.createElement('canvas');
-    canvas.width = 2;
-    canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 512);
-    gradient.addColorStop(0, '#87CEEB');
-    gradient.addColorStop(0.3, '#FFF8F0');
-    gradient.addColorStop(1, '#F7C59F');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 2, 512);
+    // Dark black background
+    scene.background = new THREE.Color(0x000000);
     
-    const backgroundTexture = new THREE.CanvasTexture(canvas);
-    scene.background = backgroundTexture;
-    
-    // Add fog for depth
-    scene.fog = new THREE.Fog(0xF7C59F, 15, 50);
+    // Dark black fog for depth
+    scene.fog = new THREE.Fog(0x000000, 15, 50);
 
     // Camera setup
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -83,16 +71,16 @@ function init() {
 
 // Setup warm wedding-style lighting
 function setupLighting() {
-    // Ambient light - warm and soft
-    const ambientLight = new THREE.AmbientLight(0xFFF8F0, 0.5);
+    // Ambient light - soft warm
+    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
     scene.add(ambientLight);
 
-    // Hemisphere light - sky and ground colors
-    const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0xF7C59F, 0.6);
+    // Hemisphere light - cool and warm
+    const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0xF7C59F, 0.5);
     scene.add(hemisphereLight);
 
-    // Main directional light - warm sunlight
-    const sunLight = new THREE.DirectionalLight(0xFFFAF0, 0.9);
+    // Main directional light - bright white sunlight
+    const sunLight = new THREE.DirectionalLight(0xFFFAF0, 1.2);
     sunLight.position.set(10, 15, 10);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 2048;
@@ -106,25 +94,30 @@ function setupLighting() {
     sunLight.shadow.bias = -0.0001;
     scene.add(sunLight);
 
-    // Fill light - softer from opposite side
-    const fillLight = new THREE.DirectionalLight(0xF7C59F, 0.3);
+    // Fill light - brighter from opposite side
+    const fillLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
     fillLight.position.set(-5, 5, -5);
     scene.add(fillLight);
 
-    // Rim light - gold accent from behind
-    const rimLight = new THREE.DirectionalLight(0xD4AF37, 0.2);
+    // Rim light - bright accent from behind
+    const rimLight = new THREE.DirectionalLight(0xFFFFFF, 0.4);
     rimLight.position.set(0, 10, -10);
     scene.add(rimLight);
+
+    // Bottom light - subtle fill from below
+    const bottomLight = new THREE.DirectionalLight(0xF7C59F, 0.2);
+    bottomLight.position.set(0, -5, 0);
+    scene.add(bottomLight);
 }
 
 // Setup ground plane
 function setupGround() {
-    // Ground geometry
+    // Ground geometry - circular platform
     const groundGeometry = new THREE.CircleGeometry(15, 64);
     const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0xDEB887,
+        color: 0x1a1a1a,
         roughness: 0.8,
-        metalness: 0.1
+        metalness: 0.2
     });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
@@ -132,28 +125,45 @@ function setupGround() {
     ground.receiveShadow = true;
     scene.add(ground);
 
-    // Decorative rangoli pattern
-    const rangoliGeometry = new THREE.RingGeometry(1, 1.8, 6);
+    // Add concentric rings for visual interest
+    for (let i = 1; i <= 5; i++) {
+        const ringGeometry = new THREE.RingGeometry(i * 2.5, i * 2.5 + 0.1, 64);
+        const ringMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x333333,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.3
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.01;
+        scene.add(ring);
+    }
+    
+    // Decorative rangoli pattern - gold on dark
+    const rangoliGeometry = new THREE.RingGeometry(1.5, 2.5, 6);
     const rangoliMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xD4AF37,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.8
+    });
+    const rangoli = new THREE.Mesh(rangoliGeometry, rangoliMaterial);
+    rangoli.rotation.x = -Math.PI / 2;
+    rangoli.position.y = 0.02;
+    scene.add(rangoli);
+
+    // Inner rangoli
+    const innerRangoliGeometry = new THREE.CircleGeometry(1, 6);
+    const innerRangoliMaterial = new THREE.MeshBasicMaterial({ 
         color: 0xFF6B35,
         side: THREE.DoubleSide,
         transparent: true,
         opacity: 0.6
     });
-    const rangoli = new THREE.Mesh(rangoliGeometry, rangoliMaterial);
-    rangoli.rotation.x = -Math.PI / 2;
-    rangoli.position.y = 0.01;
-    scene.add(rangoli);
-
-    // Inner rangoli
-    const innerRangoliGeometry = new THREE.CircleGeometry(0.8, 6);
-    const innerRangoliMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xD4AF37,
-        side: THREE.DoubleSide
-    });
     const innerRangoli = new THREE.Mesh(innerRangoliGeometry, innerRangoliMaterial);
     innerRangoli.rotation.x = -Math.PI / 2;
-    innerRangoli.position.y = 0.02;
+    innerRangoli.position.y = 0.03;
     scene.add(innerRangoli);
 }
 
@@ -322,13 +332,13 @@ function createFallbackTemple() {
 
 // Add decorative elements around the model
 function addDecorativeElements() {
-    // Lamp posts
+    // Lamp posts - glowing elements
     const lampPositions = [[3.5, 0, 3.5], [-3.5, 0, 3.5], [3.5, 0, -3.5], [-3.5, 0, -3.5]];
-    const stoneMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513, roughness: 0.8 });
+    const stoneMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
     const lampGlowMaterial = new THREE.MeshStandardMaterial({ 
         color: 0xFFD700, 
         emissive: 0xD4AF37, 
-        emissiveIntensity: 0.3 
+        emissiveIntensity: 0.8 
     });
 
     lampPositions.forEach(pos => {
@@ -340,15 +350,43 @@ function addDecorativeElements() {
         post.position.y = 0.75;
         lampPost.add(post);
         
-        // Lamp
-        const lampGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+        // Lamp - glowing sphere
+        const lampGeometry = new THREE.SphereGeometry(0.2, 16, 16);
         const lamp = new THREE.Mesh(lampGeometry, lampGlowMaterial);
         lamp.position.y = 1.6;
         lampPost.add(lamp);
         
+        // Add point light for each lamp
+        const lampLight = new THREE.PointLight(0xFFD700, 0.5, 3);
+        lampLight.position.y = 1.6;
+        lampPost.add(lampLight);
+        
         lampPost.position.set(pos[0], pos[1], pos[2]);
         scene.add(lampPost);
     });
+
+    // Add subtle ambient particles/sparkles
+    const particleCount = 50;
+    const particleGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 3 + Math.random() * 4;
+        positions[i * 3] = Math.cos(angle) * radius;
+        positions[i * 3 + 1] = 1 + Math.random() * 3;
+        positions[i * 3 + 2] = Math.sin(angle) * radius;
+    }
+    
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMaterial = new THREE.PointsMaterial({ 
+        color: 0xFFD700, 
+        size: 0.05,
+        transparent: true,
+        opacity: 0.6
+    });
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
 }
 
 // Setup mouse and touch controls
@@ -421,6 +459,11 @@ function setupUIButtons() {
     
     // Auto Rotate toggle button
     document.getElementById('rotate-btn').addEventListener('click', toggleAutoRotate);
+    
+    // Rotation speed slider
+    document.getElementById('rotation-speed').addEventListener('input', function(e) {
+        autoRotateSpeed = e.target.value * 0.001;
+    });
     
     // Error retry button
     document.getElementById('retry-btn').addEventListener('click', () => {
