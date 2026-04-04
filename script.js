@@ -4,7 +4,7 @@
  */
 
 // Model path - easily changeable
-const MODEL_PATH = './source/ganesh_wooden_mask.glb';
+const MODEL_PATH = './source/temple.glb';
 
 // Global variables
 let scene, camera, renderer, model;
