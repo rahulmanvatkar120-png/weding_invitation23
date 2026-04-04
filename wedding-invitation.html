@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* Background Image - Shows first */
+        /* Background Image */
         .bg-image {
             position: fixed;
             top: 0;
@@ -67,7 +67,7 @@
         /* Invitation Card */
         .invitation-card {
             background: var(--cream);
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
             border: 3px solid var(--gold);
             position: relative;
@@ -91,37 +91,22 @@
             pointer-events: none;
         }
 
-        .invitation-card::after {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            background: var(--gold);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-
-        /* Ornamental Corners */
-        .ornament {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: var(--gold);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 5;
-        }
-
-        .ornament-top-left { top: -20px; left: -20px; }
-        .ornament-top-right { top: -20px; right: -20px; }
-        .ornament-bottom-left { bottom: -20px; left: -20px; }
-        .ornament-bottom-right { bottom: -20px; right: -20px; }
-
         /* Card Content */
         .content {
-            padding: 80px 40px 50px;
+            padding: 50px 40px;
             text-align: center;
+        }
+
+        /* Header Section */
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .scripture-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--Burgundy);
+            margin-bottom: 15px;
         }
 
         .decorative-line {
@@ -131,58 +116,57 @@
             margin: 20px auto;
         }
 
-        .scripture-text {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            color: var(--Burgundy);
+        .welcome-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        /* Deity Section */
+        .deity-section {
+            background: linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%);
+            border: 1px solid var(--gold-light);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .deity-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 8px;
         }
 
-        /* Couple Image */
-        .couple-model {
-            position: absolute;
-            bottom: 80px;
-            right: 30px;
-            z-index: 5;
-        }
-
-        /* QR Code Section */
-        .qr-section {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            z-index: 5;
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 100px;
-            height: 100px;
-            border: 3px solid var(--gold);
-            padding: 5px;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .qr-text {
-            font-size: 0.7rem;
+        .deity-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
             color: var(--Burgundy);
-            margin-top: 8px;
-            letter-spacing: 1px;
         }
 
-        .qr-label {
-            font-size: 0.65rem;
-            color: #666;
-            margin-top: 3px;
+        .parampara-text {
+            font-size: 0.85rem;
+            color: var(--gold-dark);
+            margin-top: 5px;
+            font-style: italic;
         }
 
-        .invite-text {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
+        /* Wedding Announcement */
+        .wedding-announcement {
+            margin: 35px 0;
+            padding: 25px;
+            background: rgba(114, 47, 55, 0.08);
+            border: 1px solid var(--gold-light);
+            border-radius: 10px;
+        }
+
+        .announcement-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.6rem;
+            color: var(--Burgundy);
+            margin-bottom: 20px;
         }
 
         .couple-names {
@@ -190,8 +174,8 @@
             font-size: 3rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin: 25px 0;
-            line-height: 1.2;
+            margin: 15px 0;
+            line-height: 1.3;
         }
 
         .couple-names .ampersand {
@@ -199,22 +183,36 @@
             font-size: 2rem;
             color: var(--gold-dark);
             display: block;
-            margin: 8px 0;
+            margin: 5px 0;
         }
 
-        .and-text {
-            font-size: 1.1rem;
-            color: var(--Burgundy);
-            letter-spacing: 4px;
-            margin: 20px 0;
+        .invite-request {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-top: 15px;
+            letter-spacing: 1px;
         }
 
         /* Date & Time Section */
+        .datetime-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,251,240,0.7);
+            border: 1px solid var(--gold-light);
+            border-radius: 10px;
+        }
+
+        .datetime-title {
+            font-size: 1.2rem;
+            color: var(--Burgundy);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
         .date-time {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            margin: 30px 0;
+            gap: 40px;
             flex-wrap: wrap;
         }
 
@@ -224,61 +222,32 @@
 
         .date-time-item .label {
             font-size: 0.85rem;
-            letter-spacing: 2px;
+            color: #666;
             text-transform: uppercase;
-            color: var(--gold-dark);
+            letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
         .date-time-item .value {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--text-dark);
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        /* Deity Info */
-        .deity-info {
-            margin: 20px 0;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+        /* Location Section */
+        .location-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255,251,240,0.7);
             border: 1px solid var(--gold-light);
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
-        .deity-label {
-            font-size: 0.8rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .deity-name {
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
+        .location-title {
+            font-size: 1.2rem;
             color: var(--Burgundy);
-        }
-
-        /* Location Info */
-        .location-info {
-            margin: 15px 0 25px;
-            padding: 15px 20px;
-            background: rgba(255,251,240,0.5);
-            border: 1px solid var(--gold-light);
-            border-radius: 8px;
-        }
-
-        .location-label {
-            font-size: 0.8rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .location-text {
-            font-size: 1rem;
-            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .location-link {
@@ -291,217 +260,304 @@
             color: var(--Burgundy);
         }
 
-        .location-link:hover .location-text {
-            color: var(--Burgundy);
+        .location-text {
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-        /* Venue Sections */
-        .venue-sections {
-            display: flex;
-            gap: 20px;
+        /* Ceremony Section */
+        .ceremony-section {
             margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .venue-details {
-            flex: 1;
-            min-width: 200px;
-            margin: 10px 0;
             padding: 20px;
-            background: rgba(212, 175, 55, 0.08);
-            border-top: 2px solid var(--gold);
-            border-bottom: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+            border: 1px solid var(--gold-light);
+            border-radius: 10px;
         }
 
-        .venue-details h3 {
+        .ceremony-title {
             font-size: 1.2rem;
             color: var(--Burgundy);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-weight: 600;
-            letter-spacing: 2px;
         }
 
-        .venue-details p {
+        .ceremony-text {
             font-size: 1rem;
             color: var(--text-dark);
-            margin: 6px 0;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        /* Reception Section */
+        .reception-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,251,240,0.7);
+            border: 1px solid var(--gold-light);
+            border-radius: 10px;
+        }
+
+        .reception-title {
+            font-size: 1.2rem;
+            color: var(--Burgundy);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .reception-text {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* Blessings Section */
+        .blessings-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(114, 47, 55, 0.05);
+            border: 1px solid var(--gold-light);
+            border-radius: 10px;
+        }
+
+        .blessings-title {
+            font-size: 1.1rem;
+            color: var(--Burgundy);
+            margin-bottom: 10px;
+        }
+
+        .blessings-text {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         /* RSVP Section */
         .rsvp-section {
-            margin-top: 35px;
-            padding-top: 25px;
-            border-top: 1px solid var(--gold);
+            margin: 30px 0;
+            padding: 25px;
+            background: var(--Burgundy);
+            border-radius: 10px;
         }
 
         .rsvp-text {
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--cream);
+            margin-bottom: 10px;
         }
 
         .rsvp-date {
-            color: var(--Burgundy);
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--gold-light);
+            margin-bottom: 15px;
         }
 
         .rsvp-button {
             display: inline-block;
-            padding: 14px 45px;
-            background: var(--Burgundy);
-            color: var(--cream);
+            padding: 12px 30px;
+            background: var(--gold);
+            color: var(--text-dark);
             text-decoration: none;
-            font-size: 0.95rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            border: 2px solid var(--Burgundy);
+            font-weight: 600;
+            border-radius: 25px;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .rsvp-button:hover {
-            background: transparent;
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin: 20px 0;
+            padding: 15px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .contact-title {
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--Burgundy);
         }
 
-        /* Navigation Links */
-        .nav-links {
+        .contact-text {
+            line-height: 1.6;
+        }
+
+        /* Interactive Links */
+        .interactive-section {
+            margin: 25px 0;
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 30px;
             flex-wrap: wrap;
         }
 
-        .nav-link {
-            padding: 10px 25px;
-            background: transparent;
+        .interactive-link {
+            padding: 10px 20px;
             border: 1px solid var(--gold);
             color: var(--Burgundy);
             text-decoration: none;
             font-size: 0.9rem;
-            letter-spacing: 1px;
+            border-radius: 20px;
             transition: all 0.3s ease;
         }
 
-        .nav-link:hover {
+        .interactive-link:hover {
             background: var(--gold);
-            color: white;
+            color: var(--text-dark);
         }
 
-        /* Footer */
-        .footer {
+        /* Closing Section */
+        .closing-section {
             margin-top: 30px;
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
+            padding-top: 20px;
+            border-top: 1px solid var(--gold-light);
         }
 
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px 15px;
-            }
+        .closing-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.4rem;
+            color: var(--Burgundy);
+        }
 
+        /* Responsive */
+        @media (max-width: 768px) {
             .content {
-                padding: 60px 25px 35px;
+                padding: 40px 20px;
             }
-
-            .invitation-card::after {
-                width: 40px;
-                height: 40px;
-                top: -25px;
-            }
-
-            .ornament {
-                width: 35px;
-                height: 35px;
-            }
-
-            .ornament-top-left,
-            .ornament-top-right {
-                top: -15px;
-            }
-
-            .ornament-bottom-left,
-            .ornament-bottom-right {
-                bottom: -15px;
-            }
-
+            
             .scripture-text {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
-
+            
             .couple-names {
                 font-size: 2.2rem;
             }
-
-            .couple-names .ampersand {
-                font-size: 1.6rem;
-            }
-
+            
             .date-time {
-                gap: 30px;
-            }
-
-            .venue-sections {
                 flex-direction: column;
+                gap: 15px;
             }
-
-            .venue-details {
-                min-width: 100%;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .content {
-                padding: 50px 20px 30px;
-            }
-
-            .scripture-text {
-                font-size: 1.5rem;
-            }
-
-            .couple-names {
-                font-size: 1.9rem;
-            }
-
-            .invite-text,
-            .and-text {
-                font-size: 0.85rem;
-                letter-spacing: 2px;
-            }
-
-            .rsvp-button {
-                padding: 12px 30px;
-                font-size: 0.85rem;
+            
+            .interactive-section {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Image - Shows first, then fades -->
+    <!-- Background Image -->
     <img src="cartoon_image.png" alt="Background" class="bg-image">
 
-    <!-- QR Code Section -->
-    <div class="qr-section">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://yourwebsite.com/wedding-invitation.html&bgcolor=ffffff&color=722F37" alt="QR Code" class="qr-code" id="qrImage">
-        <p class="qr-text">SCAN TO VIEW</p>
-        <p class="qr-label">Wedding Invitation</p>
-    </div>
-    <script>
-        // Update QR code with current page URL when deployed
-        window.onload = function() {
-            const currentUrl = window.location.href;
-            const qrImg = document.getElementById('qrImage');
-            if (qrImg) {
-                const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' + encodeURIComponent(currentUrl) + '&bgcolor=ffffff&color=722F37';
-                qrImg.src = qrUrl;
-            }
-        };
+    <!-- Main Container -->
+    <div class="container">
+        <div class="invitation-card">
+            <!-- Welcome Section -->
+            <div class="content">
+                <div class="welcome-section">
+                    <p class="scripture-text">🌸 Welcome to Our Sacred Union</p>
+                    <div class="decorative-line"></div>
+                    
+                    <p class="welcome-text">
+                        Experience the divine blessings of Shri Sant Gajanan Maharaj through this heartfelt and immersive journey.
+                    </p>
+                    <p class="welcome-text">
+                        With faith, love, and devotion, we invite you to be a part of a sacred celebration where two souls unite under divine grace.
+                    </p>
+                    <p class="welcome-text">
+                        Join us as we begin this beautiful journey together, seeking blessings for a lifetime of happiness, harmony, and togetherness.
+                    </p>
+                </div>
 
+                <!-- Deity Section -->
+                <div class="deity-section">
+                    <p class="deity-label">🕉️ With Divine Blessings</p>
+                    <p class="deity-name">Shri Sant Gajanan Maharaj</p>
+                    <p class="parampara-text">(Shegaon Parampara)</p>
+                </div>
+
+                <!-- Wedding Announcement -->
+                <div class="wedding-announcement">
+                    <p class="announcement-title">💍 Wedding Announcement</p>
+                    <h1 class="couple-names">
+                        Janhavi
+                        <span class="ampersand">&</span>
+                        Rahul
+                    </h1>
+                    <p class="invite-request">request the honor of your presence to celebrate their wedding ceremony</p>
+                </div>
+
+                <!-- Date & Time Section -->
+                <div class="datetime-section">
+                    <p class="datetime-title">📅 Date & Time</p>
+                    <div class="date-time">
+                        <div class="date-time-item">
+                            <p class="label">Date</p>
+                            <p class="value">11th May 2026 (Monday)</p>
+                        </div>
+                        <div class="date-time-item">
+                            <p class="label">Time</p>
+                            <p class="value">07:30 PM onwards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Section -->
+                <div class="location-section">
+                    <p class="location-title">📍 Location</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Post+Hatala,+Taluka+Sengaon,+District+Hingoli,+Maharashtra" target="_blank" class="location-link">
+                        <p class="location-text">Post Hatala,<br>Taluka Sengaon,<br>District Hingoli, Maharashtra</p>
+                    </a>
+                </div>
+
+                <!-- Ceremony Section -->
+                <div class="ceremony-section">
+                    <p class="ceremony-title">🕉️ Wedding Ceremony</p>
+                    <p class="ceremony-text">At the Divine Temple Premises<br>(Shri Sant Gajanan Maharaj Mandir)<br><br>Post Hatala, Tq. Sengaon,<br>Dist. Hingoli, Maharashtra</p>
+                </div>
+
+                <!-- Reception Section -->
+                <div class="reception-section">
+                    <p class="reception-title">🎉 Reception</p>
+                    <p class="reception-text">Followed by Reception at the same venue</p>
+                </div>
+
+                <!-- Blessings Section -->
+                <div class="blessings-section">
+                    <p class="blessings-title">🙏 With Blessings From</p>
+                    <p class="blessings-text">Our beloved parents, elders, and family members who have guided us with love and values</p>
+                </div>
+
+                <!-- RSVP Section -->
+                <div class="rsvp-section">
+                    <p class="rsvp-text">💌 Kindly Respond By</p>
+                    <p class="rsvp-date">[RSVP Date]</p>
+                    <a href="#rsvp" class="rsvp-button">RSVP Here</a>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <p class="contact-title">📞 Contact:</p>
+                    <p class="contact-text">[Phone Number 1]<br>[Phone Number 2]</p>
+                </div>
+
+                <!-- Interactive Links -->
+                <div class="interactive-section">
+                    <a href="wedding-3d-viewer.html" class="interactive-link">📍 View Pre-Wedding Video</a>
+                    <a href="wedding-ceremony.html" class="interactive-link">📖 Ceremony Ritual Details</a>
+                    <a href="https://www.google.com/maps" target="_blank" class="interactive-link">🗺️ Get Directions</a>
+                </div>
+
+                <!-- Closing Section -->
+                <div class="closing-section">
+                    <p class="closing-text">🌸 With hearts full of love and gratitude, we look forward to celebrating this joyous occasion with you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
         // Animation: Show background first, then fade out and show invitation
         window.addEventListener('load', function() {
             const bgImage = document.querySelector('.bg-image');
@@ -512,583 +568,6 @@
                 bgImage.classList.add('fade-out');
                 container.classList.add('visible');
             }, 1500);
-        });
-    </script>
-
-    <!-- Main Invitation Card -->
-    <div class="container">
-        <div class="invitation-card">
-            <div class="ornament ornament-top-left"></div>
-            <div class="ornament ornament-top-right"></div>
-            <div class="ornament ornament-bottom-left"></div>
-            <div class="ornament ornament-bottom-right"></div>
-            
-            <div class="content">
-                <p class="scripture-text">Welcome to Our Sacred Union</p>
-                <div class="decorative-line"></div>
-                
-                <p class="invite-text">Experience the divine blessings of Shri Sant Gajanan Maharaj through this interactive digital journey.</p>
-                <p class="invite-text">With faith, love, and devotion, we invite you to be a part of our sacred wedding celebration, where two souls unite under divine grace.</p>
-                <p class="invite-text">Join us as we begin this beautiful journey together, seeking blessings for a lifetime of happiness, harmony, and togetherness.</p>
-                
-                <div class="deity-info">
-                    <p class="deity-label">Deity</p>
-                    <p class="deity-name">Shri Sant Gajanan Maharaj</p>
-                </div>
-                
-                <div class="location-info">
-                    <p class="location-label">Location</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Post+Hatala,+Tq.+Sengaon,+Dist.+Hingoli,+Maharashtra" target="_blank" class="location-link">
-                        <p class="location-text">📍 Post Hatala, Tq. Sengaon, Dist. Hingoli, Maharashtra</p>
-                    </a>
-                </div>
-                
-                <h1 class="couple-names">
-                    Janhavi
-                    <span class="ampersand">&</span>
-                    Rahul
-                </h1>
-                
-                <p class="and-text">TO CELEBRATE THEIR WEDDING</p>
-                
-                <div class="date-time">
-                    <div class="date-time-item">
-                        <p class="label">Date</p>
-                        <p class="value">11 May 2026</p>
-                    </div>
-                    <div class="date-time-item">
-                        <p class="label">Time</p>
-                        <p class="value">07:30 PM</p>
-                    </div>
-                </div>
-                
-                <div class="venue-sections">
-                    <div class="venue-details">
-                        <h3>🕉️ CEREMONY</h3>
-                        <p>[Temple/Venue Name]</p>
-                        <p>[Address Line 1]</p>
-                        <p>[City, State - PIN]</p>
-                    </div>
-                    
-                    <div class="venue-details">
-                        <h3>🎉 RECEPTION</h3>
-                        <p>[Venue Name]</p>
-                        <p>[Address Line 1]</p>
-                        <p>[City, State - PIN]</p>
-                    </div>
-                </div>
-                
-                <div class="rsvp-section">
-                    <p class="rsvp-text">Kindly Respond By</p>
-                    <p class="rsvp-date">[RSVP Date]</p>
-                    <a href="#rsvp" class="rsvp-button">RSVP Here</a>
-                </div>
-                
-                <div class="nav-links">
-                    <a href="wedding-3d-viewer.html" class="nav-link">View 3D Temple</a>
-                    <a href="wedding-ceremony.html" class="nav-link">Ceremony Details</a>
-                </div>
-                
-                <div class="footer">
-                    <p>With Blessings from Family 💐</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Three.js for Cartoon 3D Background -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script>
-        // Create 3D Cartoon Temple Background
-        const canvas = document.getElementById('temple-canvas');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xFFFBF0);
-
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 3, 12);
-        camera.lookAt(0, 2, 0);
-
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        // Cartoon/Toon Material Function
-        function createToonMaterial(color) {
-            return new THREE.MeshToonMaterial({
-                color: color,
-                gradientMap: null
-            });
-        }
-
-        // Create Cartoon Temple Group
-        const templeGroup = new THREE.Group();
-
-        // Colors
-        const goldColor = 0xD4AF37;
-        const burgundyColor = 0x722F37;
-        const creamColor = 0xFFFBF0;
-        const stoneColor = 0xC4A86C;
-
-        // Base Platform
-        const baseGeo = new THREE.BoxGeometry(8, 0.6, 8);
-        const baseMat = createToonMaterial(stoneColor);
-        const base = new THREE.Mesh(baseGeo, baseMat);
-        base.position.y = 0.3;
-        base.castShadow = true;
-        templeGroup.add(base);
-
-        // Steps
-        for (let i = 0; i < 3; i++) {
-            const stepGeo = new THREE.BoxGeometry(8 + i * 1.5, 0.25, 8 + i * 1.5);
-            const step = new THREE.Mesh(stepGeo, baseMat);
-            step.position.y = i * 0.25;
-            templeGroup.add(step);
-        }
-
-        // Main Building
-        const mainBuildingGeo = new THREE.BoxGeometry(5, 3, 5);
-        const mainBuildingMat = createToonMaterial(creamColor);
-        const mainBuilding = new THREE.Mesh(mainBuildingGeo, mainBuildingMat);
-        mainBuilding.position.y = 2.3;
-        templeGroup.add(mainBuilding);
-
-        // Pillars
-        const pillarGeo = new THREE.CylinderGeometry(0.25, 0.35, 3, 8);
-        const pillarMat = createToonMaterial(stoneColor);
-        const pillarPositions = [[-2, 2], [2, 2], [-2, -2], [2, -2]];
-        
-        pillarPositions.forEach(pos => {
-            const pillar = new THREE.Mesh(pillarGeo, pillarMat);
-            pillar.position.set(pos[0], 1.5 + 0.6, pos[1]);
-            pillar.castShadow = true;
-            templeGroup.add(pillar);
-        });
-
-        // Dome
-        const domeGeo = new THREE.SphereGeometry(1.8, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2);
-        const domeMat = createToonMaterial(goldColor);
-        const dome = new THREE.Mesh(domeGeo, domeMat);
-        dome.position.y = 4.5;
-        templeGroup.add(dome);
-
-        // Top Ornament (Kalasha)
-        const topGeo = new THREE.SphereGeometry(0.4, 8, 8);
-        const topMat = createToonMaterial(burgundyColor);
-        const topOrnament = new THREE.Mesh(topGeo, topMat);
-        topOrnament.position.y = 5.8;
-        templeGroup.add(topOrnament);
-
-        // Side Towers (Shikhara)
-        const towerGeo = new THREE.ConeGeometry(0.8, 2.5, 4);
-        const towerMat = createToonMaterial(stoneColor);
-        
-        const tower1 = new THREE.Mesh(towerGeo, towerMat);
-        tower1.position.set(-3, 2.65, 0);
-        templeGroup.add(tower1);
-
-        const tower2 = new THREE.Mesh(towerGeo, towerMat);
-        tower2.position.set(3, 2.65, 0);
-        templeGroup.add(tower2);
-
-        // Position and scale the temple
-        templeGroup.position.set(0, -1, 0);
-        templeGroup.scale.set(0.6, 0.6, 0.6);
-        scene.add(templeGroup);
-
-        // Lighting for cartoon effect
-        const ambientLight = new THREE.AmbientLight(0xFFF5E6, 0.7);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xFFFAF0, 0.8);
-        directionalLight.position.set(10, 15, 10);
-        scene.add(directionalLight);
-
-        const fillLight = new THREE.DirectionalLight(0xFFE4B5, 0.4);
-        fillLight.position.set(-10, 5, -10);
-        scene.add(fillLight);
-
-        // Subtle animation
-        let time = 0;
-        let autoRotate = true;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            time += 0.005;
-
-            if (autoRotate) {
-                templeGroup.rotation.y = Math.sin(time) * 0.15;
-                templeGroup.position.y = -1 + Math.sin(time * 2) * 0.05;
-            }
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-        
-        // Create 3D Couple Cartoon Model
-        function createCoupleModel() {
-            const coupleCanvas = document.getElementById('couple-canvas');
-            if (!coupleCanvas) return;
-            
-            const coupleScene = new THREE.Scene();
-            coupleScene.background = null;
-
-            const coupleCamera = new THREE.PerspectiveCamera(35, 280 / 350, 0.1, 1000);
-            coupleCamera.position.set(0, 1.5, 5.5);
-            coupleCamera.lookAt(0, 1, 0);
-
-            const coupleRenderer = new THREE.WebGLRenderer({ 
-                canvas: coupleCanvas, 
-                antialias: true, 
-                alpha: true 
-            });
-            coupleRenderer.setSize(280, 350);
-            coupleRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Lighting
-            const ambient = new THREE.AmbientLight(0xfff5e6, 0.7);
-            coupleScene.add(ambient);
-
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-            dirLight.position.set(3, 4, 3);
-            coupleScene.add(dirLight);
-
-            const fillLight = new THREE.DirectionalLight(0xffd700, 0.3);
-            fillLight.position.set(-3, 2, -2);
-            coupleScene.add(fillLight);
-
-            const coupleGroup = new THREE.Group();
-
-            // Colors - More realistic
-            const brideColor = 0xe63946;  // Red sari
-            const bridePalluColor = 0xffd700; // Gold pallu
-            const groomColor = 0x1d3557; // Dark blue sherwani
-            const groomAccent = 0xff6b35; // Orange accents
-            const skinColor = 0xdeb887;
-            const hairColor = 0x1a1a1a;
-
-            // Create Bride (left side)
-            const brideGroup = new THREE.Group();
-            
-            // Bride torso/sari drape
-            const brideTorsoGeo = new THREE.CylinderGeometry(0.22, 0.28, 0.9, 16);
-            const brideTorsoMat = new THREE.MeshStandardMaterial({ color: brideColor, roughness: 0.6 });
-            const brideTorso = new THREE.Mesh(brideTorsoGeo, brideTorsoMat);
-            brideTorso.position.y = 0.45;
-            brideGroup.add(brideTorso);
-
-            // Bride pallu (shawl)
-            const bridePalluGeo = new THREE.BoxGeometry(0.5, 0.8, 0.08);
-            const bridePalluMat = new THREE.MeshStandardMaterial({ color: bridePalluColor, roughness: 0.4, metalness: 0.3 });
-            const bridePallu = new THREE.Mesh(bridePalluGeo, bridePalluMat);
-            bridePallu.position.set(0.25, 0.5, 0.2);
-            brideGroup.add(bridePallu);
-
-            // Bride skirt
-            const brideSkirtGeo = new THREE.CylinderGeometry(0.35, 0.55, 1, 24);
-            const brideSkirtMat = new THREE.MeshStandardMaterial({ color: brideColor, roughness: 0.7 });
-            const brideSkirt = new THREE.Mesh(brideSkirtGeo, brideSkirtMat);
-            brideSkirt.position.y = -0.05;
-            brideGroup.add(brideSkirt);
-
-            // Bride neck
-            const brideNeckGeo = new THREE.CylinderGeometry(0.08, 0.1, 0.15, 12);
-            const brideNeckMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.8 });
-            const brideNeck = new THREE.Mesh(brideNeckGeo, brideNeckMat);
-            brideNeck.position.y = 1.05;
-            brideGroup.add(brideNeck);
-
-            // Bride head
-            const brideHeadGeo = new THREE.SphereGeometry(0.2, 20, 20);
-            brideHeadGeo.scale(1, 1.15, 1);
-            const brideHeadMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.7 });
-            const brideHead = new THREE.Mesh(brideHeadGeo, brideHeadMat);
-            brideHead.position.y = 1.35;
-            brideGroup.add(brideHead);
-
-            // Bride hair (bun + veil)
-            const brideHairBunGeo = new THREE.SphereGeometry(0.18, 16, 16);
-            const brideHairMat = new THREE.MeshStandardMaterial({ color: hairColor, roughness: 0.9 });
-            const brideHairBun = new THREE.Mesh(brideHairBunGeo, brideHairMat);
-            brideHairBun.position.set(0, 1.55, -0.05);
-            brideGroup.add(brideHairBun);
-
-            // Bride veil
-            const brideVeilGeo = new THREE.SphereGeometry(0.25, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-            const brideVeilMat = new THREE.MeshStandardMaterial({ color: 0xfffaf0, roughness: 0.5, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
-            const brideVeil = new THREE.Mesh(brideVeilGeo, brideVeilMat);
-            brideVeil.position.set(0, 1.4, 0.1);
-            brideGroup.add(brideVeil);
-
-            // Bride bindi
-            const bindiGeo = new THREE.CircleGeometry(0.03, 16);
-            const bindiMat = new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0xff0000, emissiveIntensity: 0.5 });
-            const bindi = new THREE.Mesh(bindiGeo, bindiMat);
-            bindi.position.set(0, 1.42, 0.19);
-            brideGroup.add(bindi);
-
-            // Bride earrings
-            const earringGeo = new THREE.TorusGeometry(0.04, 0.015, 8, 16);
-            const earringMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.8, roughness: 0.2 });
-            const earringL = new THREE.Mesh(earringGeo, earringMat);
-            earringL.position.set(-0.2, 1.3, 0.1);
-            brideGroup.add(earringL);
-            const earringR = new THREE.Mesh(earringGeo, earringMat);
-            earringR.position.set(0.2, 1.3, 0.1);
-            brideGroup.add(earringR);
-
-            // Bride nose ring
-            const noseRingGeo = new THREE.TorusGeometry(0.025, 0.01, 8, 16);
-            const noseRing = new THREE.Mesh(noseRingGeo, earringMat);
-            noseRing.position.set(0.05, 1.32, 0.18);
-            brideGroup.add(noseRing);
-
-            // Bride bangles (multiple)
-            for (let i = 0; i < 5; i++) {
-                const bangleGeo = new THREE.TorusGeometry(0.07, 0.012, 8, 24);
-                const bangleMat = i % 2 === 0 ? 
-                    new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.8, roughness: 0.2 }) :
-                    new THREE.MeshStandardMaterial({ color: 0xff6b35, metalness: 0.6, roughness: 0.3 });
-                const bangle = new THREE.Mesh(bangleGeo, bangleMat);
-                bangle.position.set(-0.32, 0.65 + i * 0.06, 0);
-                bangle.rotation.y = Math.PI / 2;
-                brideGroup.add(bangle);
-            }
-
-            // Bride arms
-            const armGeo = new THREE.CylinderGeometry(0.05, 0.04, 0.5, 8);
-            const armMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.8 });
-            const armL = new THREE.Mesh(armGeo, armMat);
-            armL.position.set(-0.32, 0.45, 0);
-            armL.rotation.z = 0.3;
-            brideGroup.add(armL);
-            const armR = new THREE.Mesh(armGeo, armMat);
-            armR.position.set(0.32, 0.45, 0);
-            armR.rotation.z = -0.3;
-            brideGroup.add(armR);
-
-            // Bride mangalsutra
-            const mangalsutraGeo = new THREE.CylinderGeometry(0.01, 0.01, 0.4, 8);
-            const mangalsutraMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.8, roughness: 0.2 });
-            const mangalsutra = new THREE.Mesh(mangalsutraGeo, mangalsutraMat);
-            mangalsutra.position.set(0, 1.0, 0.22);
-            brideGroup.add(mangalsutra);
-
-            // Mangalsutra pendant
-            const pendantGeo = new THREE.OctahedronGeometry(0.04, 0);
-            const pendant = new THREE.Mesh(pendantGeo, mangalsutraMat);
-            pendant.position.set(0, 0.78, 0.22);
-            brideGroup.add(pendant);
-
-            brideGroup.position.x = -0.45;
-            brideGroup.scale.set(1.2, 1.2, 1.2);
-            coupleGroup.add(brideGroup);
-
-            // Create Groom (right side)
-            const groomGroup = new THREE.Group();
-            
-            // Groom torso/sherwani
-            const groomTorsoGeo = new THREE.CylinderGeometry(0.25, 0.32, 1, 16);
-            const groomTorsoMat = new THREE.MeshStandardMaterial({ color: groomColor, roughness: 0.5 });
-            const groomTorso = new THREE.Mesh(groomTorsoGeo, groomTorsoMat);
-            groomTorso.position.y = 0.5;
-            groomGroup.add(groomTorso);
-
-            // Groom sherwani collar
-            const collarGeo = new THREE.BoxGeometry(0.25, 0.25, 0.1);
-            const collarMat = new THREE.MeshStandardMaterial({ color: groomAccent, roughness: 0.6 });
-            const collar = new THREE.Mesh(collarGeo, collarMat);
-            collar.position.set(0, 1.05, 0.22);
-            groomGroup.add(collar);
-
-            // Groom pants
-            const pantsGeo = new THREE.CylinderGeometry(0.15, 0.18, 0.9, 12);
-            const pantsMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.7 });
-            const pants = new THREE.Mesh(pantsGeo, pantsMat);
-            pants.position.y = -0.45;
-            groomGroup.add(pants);
-
-            // Groom neck
-            const groomNeckGeo = new THREE.CylinderGeometry(0.09, 0.11, 0.15, 12);
-            const groomNeckMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.8 });
-            const groomNeck = new THREE.Mesh(groomNeckGeo, groomNeckMat);
-            groomNeck.position.y = 1.1;
-            groomGroup.add(groomNeck);
-
-            // Groom head
-            const groomHeadGeo = new THREE.SphereGeometry(0.22, 20, 20);
-            groomHeadGeo.scale(1, 1.1, 1);
-            const groomHeadMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.7 });
-            const groomHead = new THREE.Mesh(groomHeadGeo, groomHeadMat);
-            groomHead.position.y = 1.4;
-            groomGroup.add(groomHead);
-
-            // Groom hair
-            const groomHairGeo = new THREE.SphereGeometry(0.23, 16, 16);
-            groomHairGeo.scale(1, 0.6, 1);
-            const groomHairMat = new THREE.MeshStandardMaterial({ color: hairColor, roughness: 0.9 });
-            const groomHair = new THREE.Mesh(groomHairGeo, groomHairMat);
-            groomHair.position.set(0, 1.58, 0);
-            groomGroup.add(groomHair);
-
-            // Groom turban (safa)
-            const turbanGeo = new THREE.CylinderGeometry(0.28, 0.32, 0.4, 20);
-            const turbanMat = new THREE.MeshStandardMaterial({ color: groomAccent, roughness: 0.7 });
-            const turban = new THREE.Mesh(turbanGeo, turbanMat);
-            turban.position.y = 1.7;
-            groomGroup.add(turban);
-
-            // Turban feather/ ornament
-            const featherGeo = new THREE.ConeGeometry(0.08, 0.2, 8);
-            const featherMat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-            const feather = new THREE.Mesh(featherGeo, featherMat);
-            feather.position.set(0.15, 1.95, 0.1);
-            groomGroup.add(feather);
-
-            // Groom safa tails
-            const tailGeo = new THREE.BoxGeometry(0.08, 0.3, 0.04);
-            const tailMat = new THREE.MeshStandardMaterial({ color: groomAccent, roughness: 0.7 });
-            const tailL = new THREE.Mesh(tailGeo, tailMat);
-            tailL.position.set(-0.25, 1.55, 0.1);
-            tailL.rotation.z = 0.3;
-            groomGroup.add(tailL);
-            const tailR = new THREE.Mesh(tailGeo, tailMat);
-            tailR.position.set(0.25, 1.55, 0.1);
-            tailR.rotation.z = -0.3;
-            groomGroup.add(tailR);
-
-            // Groom sherwani buttons
-            for (let i = 0; i < 4; i++) {
-                const buttonGeo = new THREE.SphereGeometry(0.035, 8, 8);
-                const buttonMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.8, roughness: 0.2, emissive: 0xffd700, emissiveIntensity: 0.1 });
-                const button = new THREE.Mesh(buttonGeo, buttonMat);
-                button.position.set(0, 0.75 + i * 0.18, 0.33);
-                groomGroup.add(button);
-            }
-
-            // Groom arms
-            const groomArmGeo = new THREE.CylinderGeometry(0.06, 0.05, 0.55, 8);
-            const groomArmMat = new THREE.MeshStandardMaterial({ color: skinColor, roughness: 0.8 });
-            const groomArmL = new THREE.Mesh(groomArmGeo, groomArmMat);
-            groomArmL.position.set(-0.35, 0.5, 0);
-            groomArmL.rotation.z = 0.2;
-            groomGroup.add(groomArmL);
-            const groomArmR = new THREE.Mesh(groomArmGeo, groomArmMat);
-            groomArmR.position.set(0.35, 0.5, 0);
-            groomArmR.rotation.z = -0.2;
-            groomGroup.add(groomArmR);
-
-            // Groom watch
-            const watchGeo = new THREE.BoxGeometry(0.08, 0.1, 0.03);
-            const watchMat = new THREE.MeshStandardMaterial({ color: 0xc0c0c0, metalness: 0.9, roughness: 0.1 });
-            const watch = new THREE.Mesh(watchGeo, watchMat);
-            watch.position.set(0.38, 0.35, 0.05);
-            groomGroup.add(watch);
-
-            groomGroup.position.x = 0.45;
-            groomGroup.scale.set(1.2, 1.2, 1.2);
-            coupleGroup.add(groomGroup);
-
-            // Garland between them
-            const garlandGeo = new THREE.TorusGeometry(0.55, 0.04, 8, 32, Math.PI);
-            const garlandMat = new THREE.MeshStandardMaterial({ color: 0x228b22, roughness: 0.8 });
-            const garland = new THREE.Mesh(garlandGeo, garlandMat);
-            garland.position.set(0, 0.75, 0.35);
-            garland.rotation.x = Math.PI;
-            coupleGroup.add(garland);
-
-            // Garland flowers
-            for (let i = 0; i < 12; i++) {
-                const angle = (i / 12) * Math.PI;
-                const flowerGeo = new THREE.SphereGeometry(0.04, 8, 8);
-                const flowerMat = new THREE.MeshStandardMaterial({ color: i % 2 === 0 ? 0xff69b4 : 0xffd700, roughness: 0.6 });
-                const flower = new THREE.Mesh(flowerGeo, flowerMat);
-                flower.position.set(
-                    Math.cos(angle) * 0.55,
-                    0.75 + Math.sin(angle) * 0.1,
-                    0.35 + Math.sin(angle) * 0.04
-                );
-                coupleGroup.add(flower);
-            }
-
-            coupleScene.add(coupleGroup);
-
-            // Ground circle
-            const groundGeo = new THREE.CircleGeometry(1.2, 32);
-            const groundMat = new THREE.MeshStandardMaterial({ color: 0x8b4513, roughness: 0.9 });
-            const ground = new THREE.Mesh(groundGeo, groundMat);
-            ground.rotation.x = -Math.PI / 2;
-            ground.position.y = -0.85;
-            coupleScene.add(ground);
-
-            // Animate couple
-            let coupleTime = 0;
-            function animateCouple() {
-                requestAnimationFrame(animateCouple);
-                coupleTime += 0.015;
-                
-                // Gentle sway
-                coupleGroup.rotation.y = Math.sin(coupleTime) * 0.08;
-                
-                // Subtle bounce
-                coupleGroup.position.y = Math.sin(coupleTime * 2) * 0.015;
-                
-                // Turban feather wave
-                if (feather) {
-                    feather.rotation.z = Math.sin(coupleTime * 3) * 0.15;
-                }
-                
-                coupleRenderer.render(coupleScene, coupleCamera);
-            }
-            animateCouple();
-        }
-
-        // Initialize couple model after a short delay
-        setTimeout(createCoupleModel, 500);
-
-        // Handle resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Mouse interaction
-        let isDragging = false;
-        let startX = 0;
-
-        canvas.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-        });
-
-        canvas.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                const deltaX = e.clientX - startX;
-                templeGroup.rotation.y += deltaX * 0.005;
-                startX = e.clientX;
-            }
-        });
-
-        canvas.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-
-        canvas.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-        });
-
-        canvas.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                const deltaX = e.touches[0].clientX - startX;
-                templeGroup.rotation.y += deltaX * 0.005;
-                startX = e.touches[0].clientX;
-            }
-        });
-
-        canvas.addEventListener('touchend', () => {
-            isDragging = false;
         });
     </script>
 </body>
