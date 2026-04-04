@@ -7,7 +7,7 @@
 const MODEL_PATH = './source/temple.glb';
 
 // Global variables
-let scene, camera, renderer, model;
+let scene, camera, renderer, model, loader;
 let isAutoRotate = true;
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
@@ -27,32 +27,34 @@ function init() {
     // Dark black fog for depth
     scene.fog = new THREE.Fog(0x000000, 15, 50);
 
-    // Camera setup
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(8, 5, 8);
-    camera.lookAt(0, 2, 0);
+    // Camera setup - optimized position
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(6, 4, 6);
+    camera.lookAt(0, 1.5, 0);
 
-    // Renderer setup
+    // Renderer setup - optimized for faster loading
     renderer = new THREE.WebGLRenderer({ 
-        antialias: true,
+        antialias: false, // Disabled for faster loading
         alpha: true 
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap at 2x for performance
+    renderer.shadowMap.enabled = false; // Disabled for faster loading
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
     
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-    // Setup lighting
+    // Setup lighting - simplified for faster
     setupLighting();
 
     // Setup ground
     setupGround();
 
+    // Initialize the loader
+    loader = new THREE.GLTFLoader();
+    
     // Load the 3D model
     loadModel();
 
@@ -69,102 +71,35 @@ function init() {
     animate();
 }
 
-// Setup warm wedding-style lighting
+// Setup optimized lighting
 function setupLighting() {
-    // Ambient light - soft warm
-    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
+    // Ambient light - brighter for dark background
+    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.8);
     scene.add(ambientLight);
 
-    // Hemisphere light - cool and warm
-    const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0xF7C59F, 0.5);
-    scene.add(hemisphereLight);
-
-    // Main directional light - bright white sunlight
-    const sunLight = new THREE.DirectionalLight(0xFFFAF0, 1.2);
-    sunLight.position.set(10, 15, 10);
-    sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
-    sunLight.shadow.camera.near = 0.5;
-    sunLight.shadow.camera.far = 50;
-    sunLight.shadow.camera.left = -15;
-    sunLight.shadow.camera.right = 15;
-    sunLight.shadow.camera.top = 15;
-    sunLight.shadow.camera.bottom = -15;
-    sunLight.shadow.bias = -0.0001;
+    // Main directional light - bright
+    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 1.0);
+    sunLight.position.set(5, 10, 5);
     scene.add(sunLight);
 
-    // Fill light - brighter from opposite side
+    // Fill light
     const fillLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
     fillLight.position.set(-5, 5, -5);
     scene.add(fillLight);
-
-    // Rim light - bright accent from behind
-    const rimLight = new THREE.DirectionalLight(0xFFFFFF, 0.4);
-    rimLight.position.set(0, 10, -10);
-    scene.add(rimLight);
-
-    // Bottom light - subtle fill from below
-    const bottomLight = new THREE.DirectionalLight(0xF7C59F, 0.2);
-    bottomLight.position.set(0, -5, 0);
-    scene.add(bottomLight);
 }
 
-// Setup ground plane
+// Setup ground plane - minimal
 function setupGround() {
-    // Ground geometry - circular platform
-    const groundGeometry = new THREE.CircleGeometry(15, 64);
+    // Simple dark ground
+    const groundGeometry = new THREE.CircleGeometry(10, 32);
     const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x1a1a1a,
-        roughness: 0.8,
-        metalness: 0.2
+        color: 0x111111,
+        roughness: 0.9
     });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.01;
-    ground.receiveShadow = true;
     scene.add(ground);
-
-    // Add concentric rings for visual interest
-    for (let i = 1; i <= 5; i++) {
-        const ringGeometry = new THREE.RingGeometry(i * 2.5, i * 2.5 + 0.1, 64);
-        const ringMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0x333333,
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.3
-        });
-        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring.rotation.x = -Math.PI / 2;
-        ring.position.y = 0.01;
-        scene.add(ring);
-    }
-    
-    // Decorative rangoli pattern - gold on dark
-    const rangoliGeometry = new THREE.RingGeometry(1.5, 2.5, 6);
-    const rangoliMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xD4AF37,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.8
-    });
-    const rangoli = new THREE.Mesh(rangoliGeometry, rangoliMaterial);
-    rangoli.rotation.x = -Math.PI / 2;
-    rangoli.position.y = 0.02;
-    scene.add(rangoli);
-
-    // Inner rangoli
-    const innerRangoliGeometry = new THREE.CircleGeometry(1, 6);
-    const innerRangoliMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xFF6B35,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.6
-    });
-    const innerRangoli = new THREE.Mesh(innerRangoliGeometry, innerRangoliMaterial);
-    innerRangoli.rotation.x = -Math.PI / 2;
-    innerRangoli.position.y = 0.03;
-    scene.add(innerRangoli);
 }
 
 // Load GLB model using GLTFLoader
@@ -172,9 +107,6 @@ function loadModel() {
     // Show loading indicator
     const loadingOverlay = document.getElementById('loading-overlay');
     loadingOverlay.classList.remove('hidden');
-
-    // Import Three.js addon for GLTFLoader
-    const loader = new THREE.GLTFLoader();
     
     loader.load(
         MODEL_PATH,
@@ -184,19 +116,6 @@ function loadModel() {
             
             // Center and scale the model
             centerAndScaleModel(model);
-            
-            // Enable shadows on all meshes
-            model.traverse((child) => {
-                if (child.isMesh) {
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                    
-                    // Enhance materials for wedding look
-                    if (child.material) {
-                        child.material.envMapIntensity = 0.5;
-                    }
-                }
-            });
             
             // Add model to scene
             scene.add(model);
@@ -330,63 +249,23 @@ function createFallbackTemple() {
     scene.add(model);
 }
 
-// Add decorative elements around the model
+// Add decorative elements around the model - minimal
 function addDecorativeElements() {
-    // Lamp posts - glowing elements
-    const lampPositions = [[3.5, 0, 3.5], [-3.5, 0, 3.5], [3.5, 0, -3.5], [-3.5, 0, -3.5]];
-    const stoneMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
-    const lampGlowMaterial = new THREE.MeshStandardMaterial({ 
+    // Simple glowing lamp posts
+    const lampPositions = [[3, 0, 3], [-3, 0, 3], [3, 0, -3], [-3, 0, -3]];
+    const lampMaterial = new THREE.MeshStandardMaterial({ 
         color: 0xFFD700, 
-        emissive: 0xD4AF37, 
-        emissiveIntensity: 0.8 
+        emissive: 0xFFD700, 
+        emissiveIntensity: 0.5 
     });
 
     lampPositions.forEach(pos => {
-        const lampPost = new THREE.Group();
-        
-        // Post
-        const postGeometry = new THREE.CylinderGeometry(0.05, 0.08, 1.5, 8);
-        const post = new THREE.Mesh(postGeometry, stoneMaterial);
-        post.position.y = 0.75;
-        lampPost.add(post);
-        
-        // Lamp - glowing sphere
-        const lampGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-        const lamp = new THREE.Mesh(lampGeometry, lampGlowMaterial);
-        lamp.position.y = 1.6;
-        lampPost.add(lamp);
-        
-        // Add point light for each lamp
-        const lampLight = new THREE.PointLight(0xFFD700, 0.5, 3);
-        lampLight.position.y = 1.6;
-        lampPost.add(lampLight);
-        
-        lampPost.position.set(pos[0], pos[1], pos[2]);
-        scene.add(lampPost);
+        // Lamp sphere
+        const lampGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+        const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
+        lamp.position.set(pos[0], 1.2, pos[2]);
+        scene.add(lamp);
     });
-
-    // Add subtle ambient particles/sparkles
-    const particleCount = 50;
-    const particleGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    
-    for (let i = 0; i < particleCount; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 3 + Math.random() * 4;
-        positions[i * 3] = Math.cos(angle) * radius;
-        positions[i * 3 + 1] = 1 + Math.random() * 3;
-        positions[i * 3 + 2] = Math.sin(angle) * radius;
-    }
-    
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMaterial = new THREE.PointsMaterial({ 
-        color: 0xFFD700, 
-        size: 0.05,
-        transparent: true,
-        opacity: 0.6
-    });
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particles);
 }
 
 // Setup mouse and touch controls
