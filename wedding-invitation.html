@@ -281,6 +281,20 @@
             color: var(--text-dark);
         }
 
+        .location-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .location-link:hover {
+            color: var(--Burgundy);
+        }
+
+        .location-link:hover .location-text {
+            color: var(--Burgundy);
+        }
+
         /* Venue Sections */
         .venue-sections {
             display: flex;
@@ -524,7 +538,9 @@
                 
                 <div class="location-info">
                     <p class="location-label">Location</p>
-                    <p class="location-text">Post Hatala, Tq. Sengaon, Dist. Hingoli, Maharashtra</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Post+Hatala,+Tq.+Sengaon,+Dist.+Hingoli,+Maharashtra" target="_blank" class="location-link">
+                        <p class="location-text">📍 Post Hatala, Tq. Sengaon, Dist. Hingoli, Maharashtra</p>
+                    </a>
                 </div>
                 
                 <h1 class="couple-names">
