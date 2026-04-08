@@ -75,6 +75,76 @@
             animation: fadeInUp 1s ease-out;
         }
 
+        /* Image Frame */
+        .image-frame-container {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .image-frame {
+            position: relative;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .image-frame::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid var(--gold-dark);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .image-frame img {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .frame-corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--Burgundy);
+        }
+
+        .frame-corner.top-left {
+            top: -5px;
+            left: -5px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .frame-corner.top-right {
+            top: -5px;
+            right: -5px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .frame-corner.bottom-left {
+            bottom: -5px;
+            left: -5px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .frame-corner.bottom-right {
+            bottom: -5px;
+            right: -5px;
+            border-left: none;
+            border-top: none;
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -468,6 +538,17 @@
                     <p class="welcome-text">
                         Join us as we begin this beautiful journey together, seeking blessings for a lifetime of happiness, harmony, and togetherness.
                     </p>
+                </div>
+
+                <!-- Image Frame -->
+                <div class="image-frame-container">
+                    <div class="image-frame">
+                        <div class="frame-corner top-left"></div>
+                        <div class="frame-corner top-right"></div>
+                        <div class="frame-corner bottom-left"></div>
+                        <div class="frame-corner bottom-right"></div>
+                        <img src="couple_photo.jpg" alt="Janhavi & Rahul">
+                    </div>
                 </div>
 
                 <!-- Deity Section -->
