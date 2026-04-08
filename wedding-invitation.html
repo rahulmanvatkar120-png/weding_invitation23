@@ -148,23 +148,6 @@
             border-top: none;
         }
 
-        .slideshow-nav {
-            background: var(--gold);
-            border: none;
-            color: var(--text-dark);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 12px 18px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .slideshow-nav:hover {
-            background: var(--gold-dark);
-            transform: scale(1.1);
-        }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -562,15 +545,13 @@
 
                 <!-- Image Frame -->
                 <div class="image-frame-container">
-                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">&#10094;</button>
                     <div class="image-frame">
                         <div class="frame-corner top-left"></div>
                         <div class="frame-corner top-right"></div>
                         <div class="frame-corner bottom-left"></div>
                         <div class="frame-corner bottom-right"></div>
-                        <img id="coupleImage" src="janvi_image_1.jpeg" alt="Janhavi & Rahul">
+                        <img src="janvi_image_5.jpeg" alt="Janhavi & Rahul">
                     </div>
-                    <button class="slideshow-nav next" onclick="changeSlide(1)">&#10095;</button>
                 </div>
 
                 <!-- Deity Section -->
