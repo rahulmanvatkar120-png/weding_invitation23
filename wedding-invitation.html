@@ -80,6 +80,7 @@
             margin: 25px 0;
             display: flex;
             justify-content: center;
+            position: relative;
         }
 
         .image-frame {
@@ -143,6 +144,56 @@
             right: -5px;
             border-left: none;
             border-top: none;
+        }
+
+        .slideshow-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold);
+            border: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slideshow-nav:hover {
+            background: var(--gold-dark);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slideshow-nav.prev {
+            left: -40px;
+        }
+
+        .slideshow-nav.next {
+            right: -40px;
+        }
+
+        .slideshow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .slideshow-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slideshow-dot.active {
+            background: var(--Burgundy);
+            border-color: var(--Burgundy);
         }
 
         @keyframes fadeInUp {
@@ -542,12 +593,21 @@
 
                 <!-- Image Frame -->
                 <div class="image-frame-container">
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">&#10094;</button>
                     <div class="image-frame">
                         <div class="frame-corner top-left"></div>
                         <div class="frame-corner top-right"></div>
                         <div class="frame-corner bottom-left"></div>
                         <div class="frame-corner bottom-right"></div>
-                        <img src="janvi_image_1.jpeg" alt="Janhavi & Rahul">
+                        <img id="coupleImage" src="janvi_image_1.jpeg" alt="Janhavi & Rahul">
+                    </div>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">&#10095;</button>
+                    <div class="slideshow-dots">
+                        <span class="slideshow-dot active" onclick="goToSlide(0)"></span>
+                        <span class="slideshow-dot" onclick="goToSlide(1)"></span>
+                        <span class="slideshow-dot" onclick="goToSlide(2)"></span>
+                        <span class="slideshow-dot" onclick="goToSlide(3)"></span>
+                        <span class="slideshow-dot" onclick="goToSlide(4)"></span>
                     </div>
                 </div>
 
@@ -639,6 +699,35 @@
     </div>
 
     <script>
+        // Slideshow functionality
+        const images = [
+            'janvi_image_1.jpeg',
+            'janvi_image_2.jpeg',
+            'janvi_image_3.jpeg',
+            'janvi_image_4.jpeg',
+            'janvi_image_5.jpeg'
+        ];
+        let currentSlide = 0;
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide >= images.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = images.length - 1;
+            updateSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+
+        function updateSlide() {
+            document.getElementById('coupleImage').src = images[currentSlide];
+            document.querySelectorAll('.slideshow-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
         // Animation: Show background first, then fade out and show invitation
         window.addEventListener('load', function() {
             const bgImage = document.querySelector('.bg-image');
