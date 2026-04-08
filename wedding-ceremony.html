@@ -258,6 +258,47 @@
             object-fit: cover;
             object-position: center;
             display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Fullscreen Modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .fullscreen-modal.active {
+            display: flex;
+        }
+
+        .fullscreen-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border: 3px solid var(--gold);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: var(--gold);
+            cursor: pointer;
         }
 
         /* Buttons */
@@ -480,16 +521,16 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="janvi_image_1.jpeg" alt="Janhavi Image 1">
+                <img src="janvi_image_1.jpeg" alt="Janhavi Image 1" onclick="openModal(this.src)">
             </div>
             <div class="gallery-item">
-                <img src="janvi_image_2.jpeg" alt="Janhavi Image 2">
+                <img src="janvi_image_2.jpeg" alt="Janhavi Image 2" onclick="openModal(this.src)">
             </div>
             <div class="gallery-item">
-                <img src="janvi_image_6.jpeg" alt="Janhavi Image 6">
+                <img src="janvi_image_6.jpeg" alt="Janhavi Image 6" onclick="openModal(this.src)">
             </div>
             <div class="gallery-item">
-                <img src="janvi_image_4.jpeg" alt="Janhavi Image 4">
+                <img src="janvi_image_4.jpeg" alt="Janhavi Image 4" onclick="openModal(this.src)">
             </div>
         </div>
     </section>
@@ -510,5 +551,20 @@
         <p class="footer-text">With Love & Gratitude</p>
         <p class="footer-message">Janhavi & Rahul</p>
     </footer>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('fullscreenImage').src = src;
+            document.getElementById('fullscreenModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('fullscreenModal').classList.remove('active');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
 </body>
 </html>
