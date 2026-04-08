@@ -79,8 +79,10 @@
         .image-frame-container {
             margin: 25px 0;
             display: flex;
+            align-items: center;
             justify-content: center;
             position: relative;
+            gap: 20px;
         }
 
         .image-frame {
@@ -147,34 +149,44 @@
         }
 
         .slideshow-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
             background: var(--gold);
             border: none;
             color: var(--text-dark);
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 50%;
             transition: all 0.3s ease;
-            z-index: 10;
+            flex-shrink: 0;
         }
 
         .slideshow-nav:hover {
             background: var(--gold-dark);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .slideshow-nav.prev {
-            left: -40px;
-        }
-
-        .slideshow-nav.next {
-            right: -40px;
+            transform: scale(1.1);
         }
 
         .slideshow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .slideshow-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slideshow-dot.active {
+            background: var(--Burgundy);
+            border-color: var(--Burgundy);
+        }
             display: flex;
             justify-content: center;
             gap: 8px;
